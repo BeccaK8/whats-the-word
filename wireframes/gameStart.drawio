@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-11-28T23:34:42.016Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="sKW0uRSnlHzuN_sVFQMY" version="22.1.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-28T23:50:16.118Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="MnBRqUci6Lmw3ihy1bt7" version="22.1.4" type="github">
   <diagram name="Page-1" id="OC79LGeQ-9uEQ32RmZ_2">
-    <mxGraphModel dx="2074" dy="1040" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2714" dy="1450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -193,7 +193,7 @@
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-65" value="M" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="370" y="680" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-66" value="&amp;lt;--" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-66" value="&amp;lt;--" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="410" y="680" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-67" value="GUESS" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
@@ -391,7 +391,7 @@
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-132" value="M" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="970" y="680" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-133" value="&amp;lt;--" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-133" value="&amp;lt;--" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="1010" y="680" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-134" value="GUESS" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
@@ -403,11 +403,14 @@
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-136" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.4;arrowSize=0.4;" vertex="1" parent="1">
           <mxGeometry x="560" y="380" width="80" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-138" value="Game starts with a blank screen" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-138" value="Game starts with an empty board" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
           <mxGeometry x="170" y="850" width="240" height="30" as="geometry" />
         </mxCell>
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-139" value="User enters first word and clicks &quot;Guess&quot;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
           <mxGeometry x="760" y="860" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-140" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.4;arrowSize=0.4;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="381" width="80" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
