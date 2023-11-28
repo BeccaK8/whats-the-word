@@ -20,7 +20,9 @@ As a user, I want to...
 
 ## Wireframes
 
-More wireframes to come!
+Here is a wireframe of the game starting with an empty board, user entering the first word, and clicking "Guess"
+
+![Game Start](wireframes/gameStart.drawio)
 
 
 ## Technologies Used
