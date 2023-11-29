@@ -5,8 +5,10 @@
 
 body {
     height: 100vh; 
-    flex-direction: column;
     margin: 5vmin;
+    flex-direction: column;
+    display: flex;
+    justify-content: flex-start;
 }
 
 img {
@@ -66,25 +68,25 @@ main {
 
 #keyboard {
     display: grid;
-    grid-template-rows: repeat(3, 3vmin);
     margin-top: 3vmin;
+    grid-template-rows: repeat(3, 4vmin);
 }
 
 .row {
     display: grid;
-    gap: 0.5vmin;
+    gap: 1vmin;
 }
 
 #row1 {
-    grid-template-columns: repeat(10,3vmin);
+    grid-template-columns: repeat(10, 3vmin);
 }
 
 #row2 {
-    grid-template-columns: repeat(9,3vmin);
+    grid-template-columns: repeat(9, 3vmin);
 }
 
 #row3 {
-    grid-template-columns: repeat(8,3vmin);
+    grid-template-columns: repeat(8, 3vmin);
 }
 
 .row div {
@@ -93,6 +95,7 @@ main {
     border: 0.2vmin solid black;
     border-radius: 0.5vmin;
     font-size: 1.5vmin;
+    padding: 0.5vmin 0vmin;
 }
 
 button {
