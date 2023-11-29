@@ -6,17 +6,27 @@
 body {
     height: 100vh; 
     flex-direction: column;
-    margin: 0;
+    margin: 5vmin;
 }
 
 img {
-    height: 8vmin;
+    height: 5vmin;
+}
+
+h2 {
+    font-size: 3vmin;
+}
+
+@media only screen and (min-width: 768px) {
+    img {
+        height: 8vmin;
+    }        
 }
 
 header {
     display: flex;
     flex-direction: row;
-}
+}    
 
 header > nav {
     margin-left: 2vmin;
@@ -28,6 +38,10 @@ header > nav {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+main {
+    flex-direction: column;
 }
 
 #guesses {
@@ -76,10 +90,8 @@ header > nav {
 .row div {
     display: flex;
     justify-content: center;
-    align-items: center;
     border: 0.2vmin solid black;
     border-radius: 0.5vmin;
-    gap: 1vmin;
     font-size: 1.5vmin;
 }
 

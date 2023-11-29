@@ -7,99 +7,101 @@
     <script defer src="js/main.js"></script>
     <title>What's the Word</title>
 </head>
-<body class="flex-ctr">
-    <header>
+<body>
+    <header class="flex-ctr">
         <img src="imgs/gameLogo.png" alt="What's the Word?!">
+        <!-- top nav -->
         <nav>
             <div id="stats">Stats</div>
             <div id="help">Help</div>
         </nav>
     </header>
-    <h2 id="message"></h2>
+    
+    
+    <main class="flex-ctr">
+        <h2 id="message">message goes here</h2>
 
-    <!-- top nav -->
-
-    <!-- section for guess squares -->
-    <section id="guesses">
-        <!-- guess 0 -->
-        <div id="g0l0" class="square">A</div>
-        <div id="g0l1" class="square"></div>
-        <div id="g0l2" class="square"></div>
-        <div id="g0l3" class="square"></div>
-        <div id="g0l4" class="square"></div>
-        <!-- guess 1 -->
-        <div id="g1l0" class="square"></div>
-        <div id="g1l1" class="square"></div>
-        <div id="g1l2" class="square"></div>
-        <div id="g1l3" class="square"></div>
-        <div id="g1l4" class="square"></div>
-        <!-- guess 2 -->
-        <div id="g2l0" class="square"></div>
-        <div id="g2l1" class="square"></div>
-        <div id="g2l2" class="square"></div>
-        <div id="g2l3" class="square"></div>
-        <div id="g2l4" class="square"></div>
-        <!-- guess 3 -->
-        <div id="g3l0" class="square"></div>
-        <div id="g3l1" class="square"></div>
-        <div id="g3l2" class="square"></div>
-        <div id="g3l3" class="square"></div>
-        <div id="g3l4" class="square"></div>
-        <!-- guess 4 -->
-        <div id="g4l0" class="square"></div>
-        <div id="g4l1" class="square"></div>
-        <div id="g4l2" class="square"></div>
-        <div id="g4l3" class="square"></div>
-        <div id="g4l4" class="square"></div>
-        <!-- guess 5 (really 6 since we started with 0) -->
-        <div id="g5l0" class="square"></div>
-        <div id="g5l1" class="square"></div>
-        <div id="g5l2" class="square"></div>
-        <div id="g5l3" class="square"></div>
-        <div id="g5l4" class="square"></div>
-    </section>
-
-    <!-- section for keyboard -->
-    <section id="keyboard">
-        <section id="row1" class="row flex-ctr">
-            <div class="key">Q</div>
-            <div class="key">W</div>
-            <div class="key">E</div>
-            <div class="key">R</div>
-            <div class="key">T</div>
-            <div class="key">Y</div>
-            <div class="key">U</div>
-            <div class="key">I</div>
-            <div class="key">O</div>
-            <div class="key">P</div>
+        <!-- section for guess squares -->
+        <section id="guesses">
+            <!-- guess 0 -->
+            <div id="g0l0" class="square">A</div>
+            <div id="g0l1" class="square"></div>
+            <div id="g0l2" class="square"></div>
+            <div id="g0l3" class="square"></div>
+            <div id="g0l4" class="square"></div>
+            <!-- guess 1 -->
+            <div id="g1l0" class="square"></div>
+            <div id="g1l1" class="square"></div>
+            <div id="g1l2" class="square"></div>
+            <div id="g1l3" class="square"></div>
+            <div id="g1l4" class="square"></div>
+            <!-- guess 2 -->
+            <div id="g2l0" class="square"></div>
+            <div id="g2l1" class="square"></div>
+            <div id="g2l2" class="square"></div>
+            <div id="g2l3" class="square"></div>
+            <div id="g2l4" class="square"></div>
+            <!-- guess 3 -->
+            <div id="g3l0" class="square"></div>
+            <div id="g3l1" class="square"></div>
+            <div id="g3l2" class="square"></div>
+            <div id="g3l3" class="square"></div>
+            <div id="g3l4" class="square"></div>
+            <!-- guess 4 -->
+            <div id="g4l0" class="square"></div>
+            <div id="g4l1" class="square"></div>
+            <div id="g4l2" class="square"></div>
+            <div id="g4l3" class="square"></div>
+            <div id="g4l4" class="square"></div>
+            <!-- guess 5 (really 6 since we started with 0) -->
+            <div id="g5l0" class="square"></div>
+            <div id="g5l1" class="square"></div>
+            <div id="g5l2" class="square"></div>
+            <div id="g5l3" class="square"></div>
+            <div id="g5l4" class="square"></div>
         </section>
-        <section id="row2" class="row flex-ctr">
-            <div class="key">A</div>
-            <div class="key">S</div>
-            <div class="key">D</div>
-            <div class="key">F</div>
-            <div class="key">G</div>
-            <div class="key">H</div>
-            <div class="key">J</div>
-            <div class="key">K</div>
-            <div class="key">L</div>
-        </section>
-        <section id="row3" class="row flex-ctr">
-            <div class="key">Z</div>
-            <div class="key">X</div>
-            <div class="key">C</div>
-            <div class="key">V</div>
-            <div class="key">B</div>
-            <div class="key">N</div>
-            <div class="key">M</div>
-            <div class="key">←</div>
-        </section>
-    </section>
 
-    <!-- buttons -->
-    <div id="buttons">
-        <button id="guess">Guess</button>
-        <button id="playAgain" hidden>Play Again</button>
-    </div>
+        <!-- section for keyboard -->
+        <section id="keyboard">
+            <section id="row1" class="row flex-ctr">
+                <div class="key">Q</div>
+                <div class="key">W</div>
+                <div class="key">E</div>
+                <div class="key">R</div>
+                <div class="key">T</div>
+                <div class="key">Y</div>
+                <div class="key">U</div>
+                <div class="key">I</div>
+                <div class="key">O</div>
+                <div class="key">P</div>
+            </section>
+            <section id="row2" class="row flex-ctr">
+                <div class="key">A</div>
+                <div class="key">S</div>
+                <div class="key">D</div>
+                <div class="key">F</div>
+                <div class="key">G</div>
+                <div class="key">H</div>
+                <div class="key">J</div>
+                <div class="key">K</div>
+                <div class="key">L</div>
+            </section>
+            <section id="row3" class="row flex-ctr">
+                <div class="key">Z</div>
+                <div class="key">X</div>
+                <div class="key">C</div>
+                <div class="key">V</div>
+                <div class="key">B</div>
+                <div class="key">N</div>
+                <div class="key">M</div>
+                <div class="key">←</div>
+            </section>
+        </section>
+        <!-- buttons -->
+        <div id="buttons">
+            <button id="guess">Guess</button>
+            <button id="playAgain" hidden>Play Again</button>
+        </div>
+    </main>
 </body>
 </html>
