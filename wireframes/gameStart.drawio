@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-29T00:16:03.626Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="qQDgB1As4wIe0VZcyuB9" version="22.1.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-29T00:16:33.308Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="M3_fASJnfM9VCvEidgQ3" version="22.1.4" type="github">
   <diagram name="Page-1" id="OC79LGeQ-9uEQ32RmZ_2">
     <mxGraphModel dx="2714" dy="1450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
       <root>
@@ -1156,7 +1156,7 @@
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-480" value="So Close! The word was SPARE" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=17;" vertex="1" parent="1">
           <mxGeometry x="2061" y="1070" width="250" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-481" value="User guesses the correct word" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+        <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-481" value="User does not guess word in six tries" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
           <mxGeometry x="2001" y="1794" width="360" height="30" as="geometry" />
         </mxCell>
         <mxCell id="nzd9qnpcD2_Ul7Y8DZ1e-482" value="S" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#1e941e;" vertex="1" parent="1">
