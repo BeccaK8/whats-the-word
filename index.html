@@ -10,17 +10,11 @@
 <body>
     <header class="flex-ctr">
         <img src="imgs/gameLogo.png" alt="What's the Word?!">
-        <!-- top nav -->
-        <nav>
-            <div id="stats">Stats</div>
-            <div id="help">Help</div>
-        </nav>
     </header>
-    
     
     <main class="flex-ctr">
         <h2 id="message">message goes here</h2>
-
+        
         <!-- section for guess squares -->
         <section id="guesses">
             <!-- guess 0 -->
@@ -60,7 +54,7 @@
             <div id="g5l3" class="square"></div>
             <div id="g5l4" class="square"></div>
         </section>
-
+        
         <!-- section for keyboard -->
         <section id="keyboard">
             <section id="row1" class="row flex-ctr">
@@ -97,11 +91,18 @@
                 <div class="key">←</div>
             </section>
         </section>
+
         <!-- buttons -->
         <div id="buttons">
             <button id="guess">Guess</button>
             <button id="playAgain" hidden>Play Again</button>
         </div>
+
+        <!-- help/stats nav -->
+        <nav>
+            <img src="imgs/stats.png" alt="Statistics" class="navIcon">
+            <img src="imgs/help.png" alt="Help" class="navIcon">
+        </nav>
     </main>
 </body>
 </html>

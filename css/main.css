@@ -30,11 +30,6 @@ header {
     flex-direction: row;
 }    
 
-header > nav {
-    margin-left: 2vmin;
-    align-self: center;
-    font-size: 1.5vmin;
-}
 
 .flex-ctr {
     display: flex;
@@ -111,4 +106,12 @@ button {
 button:hover {
     background-color: green;
     color: white;
+}
+
+nav {
+    margin: 2vmin;
+}
+.navIcon {
+    height: 2.5vmin;
+    opacity: .5;
 }
