@@ -6,7 +6,20 @@
 //       = Partial Match ==> correct letter in the wrong spot (yellow)
 //       = No Match ==> letter not in secret word (grey)
 //       = Unknown ==> letter has not been tried yet (white)
+//   - Maximum number of guesses
 // ===================================================== 
+// TODO: add test case for repeat letters - skunk
+const SECRET_WORD_LIST = ['stare', 'quota', 'jumpy', 'skimp'];
+
+const LETTER_STATE_LOOKUP = {
+    'e': {desc: 'Exact Match', color: 'green'},
+    'p': {desc: 'Partial Match', color: 'yellow'},
+    'n': {desc: 'No Match', color: 'grey'},
+    '0': {desc: 'Unknown', color: 'white'}
+};
+
+const MAX_GUESSES = 6;
+
 
 // ===================================================== 
 //  Identify and initialize state variables:
@@ -14,7 +27,33 @@
 //   - Player object to hold stats
 //   - Guesses array of arrays - store each letter separately to render easier
 //   - Letters array - store current state of each letter
+//   -
 // ===================================================== 
+class Player {
+    constructor() {
+        this.winCount = 0;
+        this.lossCount = 0;
+        this.winStreak = 0;
+    };
+
+    recordWin() {
+        this.winCount++;
+        this.winStreak++;
+    }
+
+    recordLoss() {
+        this.lossCount++;
+        this.winStreak = 0;
+    }
+}
+
+const player = new Player();   // instance of Player to hold the statistics for the current user
+
+let secretWord;   // secret word
+
+let guesses;  // an array of 6 nested arrays containing objects
+let letters;  // an array of 26 arrays where the key is the letter (from keyboard) and the value is it's letter state
+
 
 // ===================================================== 
 // Store elements that will be needed multiple times
@@ -22,6 +61,19 @@
 //   - Play Again button
 //   - Guess square divs
 // ===================================================== 
+console.log('\n============================\n');
+console.log('Storing Elements: \n');
+console.log('============================\n');
+const messageEl = document.querySelector('h2');
+console.log('message element: \n', messageEl);
+const guessButtonEl = document.getElementById('guess');
+console.log('guess button element: \n', guessButtonEl);
+const playAgainButtonEl = document.getElementById('playAgain');
+console.log('[play again button] element: \n', playAgainButtonEl);
+
+// grab keyboard elements and save them to an array
+const keysEls = [...document.querySelectorAll(".row > div")];
+console.log('keys element array: \n', keysEls);
 
 // ===================================================== 
 // Render the screen:
