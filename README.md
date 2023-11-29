@@ -46,7 +46,11 @@ Finally, this is a wireframe of the user's statistics for the current session.
 // ===================================================== 
 //  Define required constants:
 //   - Master list of secret words
-//   - Letter states: exact match, partial match, no match, unknown (not tried)
+//   - Letter states: exact match, partial match, no match, unknown (not tried) with their associated background colors
+//       = Exact Match ==> correct letter in the correct spot (green)
+//       = Partial Match ==> correct letter in the wrong spot (yellow)
+//       = No Match ==> letter not in secret word (grey)
+//       = Unknown ==> letter has not been tried yet (white)
 // ===================================================== 
 
 // ===================================================== 
@@ -67,8 +71,8 @@ Finally, this is a wireframe of the user's statistics for the current session.
 // ===================================================== 
 // Render the screen:
 //   - Render the appropriate message (make a guess, you win, you lose)
-//   - Render the guesses with the appropriate background color based on the guess's state (exact match, in there somewhere, not in secret word, that guess hasn't been made yet)
-//   - Render the screen keyboard with the appropriate background color based on the letter's state (exact match, in there somewhere, not in secret word, not used yet)
+//   - Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
+//   - Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
 //   - Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
 // ===================================================== 
 
