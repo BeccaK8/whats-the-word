@@ -27,7 +27,7 @@ h2 {
 
 header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }    
 
 
@@ -109,9 +109,37 @@ button:hover {
 }
 
 nav {
-    margin: 2vmin;
+    position: absolute;
+    left: 65vmin;
+    top: 9vmin;
 }
 .navIcon {
-    height: 2.5vmin;
+    height: 1.75vmin;
     opacity: .5;
+}
+
+@media only screen and (min-width: 768px) {
+    nav {
+        position: absolute;
+        left: 75vmin;
+        top: 12vmin;
+    }
+
+    .navIcon {
+        height: 2.5vmin;
+        opacity: .5;
+    }  
+}
+
+@media only screen and (min-width: 1012px) {
+    nav {
+        position: absolute;
+        left: 80vmin;
+        top: 12vmin;
+    }
+
+    .navIcon {
+        height: 2.5vmin;
+        opacity: .5;
+    }  
 }
