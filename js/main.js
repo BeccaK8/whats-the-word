@@ -14,9 +14,9 @@
 const SECRET_WORD_LIST = ['stare', 'quota', 'jumpy', 'skimp'];
 
 const LETTER_STATE_LOOKUP = {
-    'e': {desc: 'Exact Match', color: 'green'},
-    'p': {desc: 'Partial Match', color: 'yellow'},
-    'n': {desc: 'No Match', color: 'grey'},
+    'e': {desc: 'Exact Match', color: 'rgb(10 123 55)'},
+    'p': {desc: 'Partial Match', color: 'rgb(255 192 0)'},
+    'n': {desc: 'No Match', color: 'rgb(89 89 89)'},
     '0': {desc: 'Unknown', color: 'white'}
 };
 
@@ -115,6 +115,17 @@ function init() {
 
     // reset letters state
     letters = [];
+
+    // TODO: remove this - for testing only:
+    letters = {
+        A: 'e',
+        S: 'p',
+        E: 'n'
+    };
+    
+
+    // TODO: call render() when it's ready
+    render();
 }
 
 init();
@@ -141,11 +152,27 @@ function resetGuesses() {
 
 // ===================================================== 
 // Render the screen:
-//   - Render the appropriate message (make a guess, you win, you lose)
-//   - Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
-//   - Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
-//   - Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
 // ===================================================== 
+function renderKeys() {
+    // Loop through the keyboard key elements
+    // for each key, check if that letter has been selected and is in the letters array
+    // if so, change the background and font color
+    for (let letter in letters) {
+        // console.log('renderKeys - letter \n:', letters[letter]);
+        const keyEl = document.getElementById(letter);
+        // console.log('renderKeys - keyEl \n:', keyEl);
+        keyEl.style.backgroundColor = LETTER_STATE_LOOKUP[letters[letter]].color;
+        keyEl.style.color = 'white';
+    }
+}
+
+function render() {
+    //   - Render the appropriate message (make a guess, you win, you lose)
+    //   - Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
+    //   - Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
+    //   - Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
+    renderKeys();
+}
 
 // ===================================================== 
 // Handle Click of Screen "Keyboard" Buttons:
