@@ -42,24 +42,43 @@ Finally, this is a wireframe of the user's statistics for the current session.
 
 ## Pseudocode
 
-```
-// Identify and initialize state variables:
+```js
+// ===================================================== 
+//  Identify and initialize state variables:
 //   - Set the secret word
+// ===================================================== 
 
-
+// ===================================================== 
 // Render the screen:
 //   - Render the appropriate message (make a guess, you win, you lose)
 //   - Render the guesses with the appropriate background color based on the guess's state (exact match, in there somewhere, not in secret word, that guess hasn't been made yet)
 //   - Render the screen keyboard with the appropriate background color based on the letter's state (exact match, in there somewhere, not in secret word, not used yet)
 //   - Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
+// ===================================================== 
 
+// ===================================================== 
+// Handle Click of Screen "Keyboard" Buttons:
+//   - Check if "letter" button clicked - if not, ignore click
+//   - Capture "letter" of button clicked
+//   - Call Handle Selected Letter (below) with letter clicked
+// ===================================================== 
 
-// Handle Click of Screen Keyboard:
-//   - Update current guess square with letter clicked
+// ===================================================== 
+// Handle Press of Keyboard
+//   - Check if key pressed is a letter - if not, ignore press
+//   - Capture "letter" of key pressed
+//   - Call Handle Selected Letter (below) with letter pressed
+// ===================================================== 
+
+// ===================================================== 
+// Handle Selected Letter
+//   - Update current guess square state variable with letter clicked
 //   - Advance to next letter square on current guess
 //   - If no more empty squares on current guess, highlight "GUESS" button
+//   - Render changes to screen
+// ===================================================== 
 
-
+// ===================================================== 
 // Handle Click of "GUESS" button:
 //   - Check for win - does guess equal mystery word
 //   - If no win, for each letter in guess, 
@@ -68,16 +87,19 @@ Finally, this is a wireframe of the user's statistics for the current session.
 //      = Otherwise, mark letter as "not in secret word"
 //   - Increment number of guesses
 //   - If win or lose, update statistics
+// ===================================================== 
 
-
+// ===================================================== 
 // Handle Click of "PLAY AGAIN" button:
 //   - Reinitialize game
+// ===================================================== 
 
-
+// ===================================================== 
 // Handle Click of "Stats" button:
 //   - Display Number of Games Played
 //   - Display Win %
 //   - Display Current Streak
+// ===================================================== 
 
 
 // Handle Click of "Help" button:
