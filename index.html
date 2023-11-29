@@ -8,19 +8,21 @@
     <title>What's the Word</title>
 </head>
 <body class="flex-ctr">
-    <img src="imgs/gameLogo.png" alt="What's the Word?!">
+    <header>
+        <img src="imgs/gameLogo.png" alt="What's the Word?!">
+        <nav>
+            <div id="stats">Stats</div>
+            <div id="help">Help</div>
+        </nav>
+    </header>
     <h2 id="message"></h2>
 
     <!-- top nav -->
-    <nav>
-        <div id="stats">Stats</div>
-        <div id="help">Help</div>
-    </nav>
 
     <!-- section for guess squares -->
     <section id="guesses">
         <!-- guess 0 -->
-        <div id="g0l0" class="square"></div>
+        <div id="g0l0" class="square">A</div>
         <div id="g0l1" class="square"></div>
         <div id="g0l2" class="square"></div>
         <div id="g0l3" class="square"></div>
@@ -95,7 +97,9 @@
     </section>
 
     <!-- buttons -->
-    <button id="guess">Guess</button>
-    <button id="playAgain">Play Again</button>
+    <div id="buttons">
+        <button id="guess">Guess</button>
+        <button id="playAgain" hidden>Play Again</button>
+    </div>
 </body>
 </html>

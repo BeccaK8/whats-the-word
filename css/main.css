@@ -6,10 +6,22 @@
 body {
     height: 100vh; 
     flex-direction: column;
+    margin: 0;
 }
 
 img {
-    height: 6vmin;
+    height: 8vmin;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+}
+
+header > nav {
+    margin-left: 2vmin;
+    align-self: center;
+    font-size: 1.5vmin;
 }
 
 .flex-ctr {
@@ -30,31 +42,58 @@ img {
     border-radius: 1vmin;
 }
 
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vmin;
+    color: white;
+}
+
 #keyboard {
     display: grid;
-    grid-template-rows: repeat(3, 2vmin);
+    grid-template-rows: repeat(3, 3vmin);
+    margin-top: 3vmin;
 }
 
 .row {
     display: grid;
     gap: 0.5vmin;
-    margin-top: 3vmin;
 }
 
 #row1 {
-    grid-template-columns: repeat(10,2vmin);
+    grid-template-columns: repeat(10,3vmin);
 }
 
 #row2 {
-    grid-template-columns: repeat(9,2vmin);
+    grid-template-columns: repeat(9,3vmin);
 }
 
 #row3 {
-    grid-template-columns: repeat(8,2vmin);
+    grid-template-columns: repeat(8,3vmin);
 }
 
 .row div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 0.2vmin solid black;
     border-radius: 0.5vmin;
     gap: 1vmin;
+    font-size: 1.5vmin;
+}
+
+button {
+    width: 15vmin;
+    margin-top: 2vmin;
+    background-color: white;
+    color: black;
+    border: 0.2vmin solid black;
+    border-radius: 0.4vmin;
+    font-size: 2vmin;
+}
+
+button:hover {
+    background-color: green;
+    color: white;
 }
