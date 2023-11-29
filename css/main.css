@@ -11,6 +11,12 @@ body {
     justify-content: flex-start;
 }
 
+.flex-ctr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 img {
     height: 5vmin;
 }
@@ -19,23 +25,30 @@ h2 {
     font-size: 3vmin;
 }
 
-@media only screen and (min-width: 768px) {
-    img {
-        height: 8vmin;
-    }        
-}
-
 header {
     display: flex;
     flex-direction: column;
 }    
 
-
-.flex-ctr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+header > #nav {
+    align-self: flex-end;
 }
+.navIcon {
+    height: 1.75vmin;
+    opacity: .5;
+}
+
+@media only screen and (min-width: 768px) {
+    img {
+        height: 8vmin;
+    }        
+
+    .navIcon {
+        height: 2.5vmin;
+        opacity: .5;
+    }  
+}
+
 
 main {
     flex-direction: column;
@@ -108,38 +121,3 @@ button:hover {
     color: white;
 }
 
-nav {
-    position: absolute;
-    left: 65vmin;
-    top: 9vmin;
-}
-.navIcon {
-    height: 1.75vmin;
-    opacity: .5;
-}
-
-@media only screen and (min-width: 768px) {
-    nav {
-        position: absolute;
-        left: 75vmin;
-        top: 12vmin;
-    }
-
-    .navIcon {
-        height: 2.5vmin;
-        opacity: .5;
-    }  
-}
-
-@media only screen and (min-width: 1012px) {
-    nav {
-        position: absolute;
-        left: 80vmin;
-        top: 12vmin;
-    }
-
-    .navIcon {
-        height: 2.5vmin;
-        opacity: .5;
-    }  
-}
