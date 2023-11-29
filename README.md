@@ -101,9 +101,10 @@ Finally, this is a wireframe of the user's statistics for the current session.
 //   - Display Current Streak
 // ===================================================== 
 
-
+// ===================================================== 
 // Handle Click of "Help" button:
 //   - Overlay the instructions on screen
+// ===================================================== 
 ```
 
 
