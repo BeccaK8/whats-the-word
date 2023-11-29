@@ -40,6 +40,52 @@ Finally, this is a wireframe of the user's statistics for the current session.
 ![User Statistics](wireframes/userStats.png)
 
 
+## Pseudocode
+
+```
+// Identify and initialize state variables:
+//   - Set the secret word
+
+
+// Render the screen:
+//   - Render the appropriate message (make a guess, you win, you lose)
+//   - Render the guesses with the appropriate background color based on the guess's state (exact match, in there somewhere, not in secret word, that guess hasn't been made yet)
+//   - Render the screen keyboard with the appropriate background color based on the letter's state (exact match, in there somewhere, not in secret word, not used yet)
+//   - Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
+
+
+// Handle Click of Screen Keyboard:
+//   - Update current guess square with letter clicked
+//   - Advance to next letter square on current guess
+//   - If no more empty squares on current guess, highlight "GUESS" button
+
+
+// Handle Click of "GUESS" button:
+//   - Check for win - does guess equal mystery word
+//   - If no win, for each letter in guess, 
+//      = Check if letter at that spot is same as secret word at that spot.  If so, mark letter as "exact match"
+//      = Check if letter at that spot is anywhere else in secret word.  If so, mark letter as "found but not exact match"
+//      = Otherwise, mark letter as "not in secret word"
+//   - Increment number of guesses
+//   - If win or lose, update statistics
+
+
+// Handle Click of "PLAY AGAIN" button:
+//   - Reinitialize game
+
+
+// Handle Click of "Stats" button:
+//   - Display Number of Games Played
+//   - Display Win %
+//   - Display Current Streak
+
+
+// Handle Click of "Help" button:
+//   - Overlay the instructions on screen
+```
+
+
+
 ## Technologies Used
 - HTML5
 - CSS3
