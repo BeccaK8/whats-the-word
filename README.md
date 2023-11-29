@@ -44,8 +44,24 @@ Finally, this is a wireframe of the user's statistics for the current session.
 
 ```js
 // ===================================================== 
+//  Define required constants:
+//   - Master list of secret words
+//   - Letter states: exact match, partial match, no match, unknown (not tried)
+// ===================================================== 
+
+// ===================================================== 
 //  Identify and initialize state variables:
-//   - Set the secret word
+//   - Secret word
+//   - Player object to hold stats
+//   - Guesses array of arrays - store each letter separately to render easier
+//   - Letters array - store current state of each letter
+// ===================================================== 
+
+// ===================================================== 
+// Store elements that will be needed multiple times
+//   - Guess button
+//   - Play Again button
+//   - Guess square divs
 // ===================================================== 
 
 // ===================================================== 
