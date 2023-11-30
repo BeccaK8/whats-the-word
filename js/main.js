@@ -332,9 +332,10 @@ function handleGuess() {
             // check for partial or no match
             if (secretWord.indexOf(square.letter) > -1) {
                 console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is a partial match`);
-                
+                square.state = 'p';
             } else {
-                console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is not a match`)
+                console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is not a match`);
+                square.state = 'n';
             }
         }
         console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
@@ -342,8 +343,15 @@ function handleGuess() {
         // Otherwise, mark letter as "not in secret word"
     };
     //   - Check for win - does guess equal mystery word
-    //   - Increment number of guesses
+    
+    //   - Increment number of guesses and reset guess complete
+    numGuesses++;
+    guessComplete = false;
+
     //   - If win or lose, update statistics
+
+    // update board
+    render();
 
 }
 
