@@ -20,6 +20,8 @@ const LETTER_STATE_LOOKUP = {
     '0': {desc: 'Unknown', bgColor: 'white', color: 'black'}
 };
 
+const VALID_KEYUP_KEYS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
 const MAX_GUESSES = 6;
 const WORD_LENGTH = 5;
 
@@ -104,9 +106,9 @@ function init() {
     secretWord = getSecretWord();
 
     // reset guesses array
-    console.log('init: guesses before reset():\n', guesses);
+    // console.log('init: guesses before reset():\n', guesses);
     resetGuesses();
-    console.log('init: guesses after reset():\n', guesses);
+    // console.log('init: guesses after reset():\n', guesses);
 
     // reset letters used and game status
     lettersUsed = [];
@@ -247,14 +249,14 @@ function handleSelectedLetter(letter) {
     // console.log('handleSelectedLetter: guess square letter: \n', guesses[numGuesses][letterIdx].letter);
     
     // check if they hit the backspace button
-    const isBackspace = letter === 'backspace';
+    const isBackspace = letter.toLowerCase() === 'backspace';
     // console.log('handleSelectedLetter: isbackspace - \n', isBackspace);
 
     while (letterIdx < WORD_LENGTH && guesses[numGuesses][letterIdx].letter) {
         // console.log('handleSelectedLetter - in while with letterIdx of: \n', letterIdx);
         letterIdx++;
     }
-    console.log('handleSelectedLetter - out of while with letterIdx of: \n', letterIdx);
+    // console.log('handleSelectedLetter - out of while with letterIdx of: \n', letterIdx);
 
     if (isBackspace) {
         // console.log('handleSelectedLetter - handling backspace - letterIdx: \n', letterIdx);
@@ -291,7 +293,7 @@ function handleScreenKeyClick(evt) {
 
     // Capture "letter" of button clicked
     const letterClicked = evt.target.id;
-    console.log('handleScreenKeyClick - letter id: \n', letterClicked);
+    // console.log('handleScreenKeyClick - letter id: \n', letterClicked);
 
     // Call Handle Selected Letter (below) with letter clicked
     handleSelectedLetter(letterClicked);
@@ -299,10 +301,25 @@ function handleScreenKeyClick(evt) {
 
 // ===================================================== 
 // Handle Press of Keyboard
-//   - Check if key pressed is a letter - if not, ignore press
+//   - Check if key pressed is a letter - if not, igre press
 //   - Capture "letter" of key pressed
 //   - Call Handle Selected Letter (below) with letter pressed
 // ===================================================== 
+function handleKeyUp(evt) {
+    // console.log('handleKeyUp - event key: \n', evt.key);
+    // console.log('handleKeyUp - event code: \n', evt.code);
+    const evtKey = evt.key.toUpperCase();
+    // console.log('handleKeyUp - eventkey: \n', evtKey);
+    // if it's not a letter or the backspace, just return
+    if (evt.code !== `Key${evtKey}` && evt.code !== 'Backspace' && evt.code !== 'Enter') return;
+
+    if (evt.code !== 'Enter') {
+        handleSelectedLetter(evtKey);
+    } else {
+        // user submitted their guess using "enter" key
+        if (!gameStatus && guessComplete) handleGuess();
+    }
+}
 
 // Update letters used to add letter if not there and to update state appropriately
 function updateLettersUsed(letter, state) {
@@ -421,3 +438,5 @@ function handleButtonClick(evt) {
 document.getElementById('keyboard').addEventListener('click', handleScreenKeyClick);
 
 buttonEl.addEventListener('click', handleButtonClick);
+
+document.addEventListener('keyup', handleKeyUp);
