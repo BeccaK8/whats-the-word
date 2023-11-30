@@ -109,9 +109,9 @@ function init() {
     secretWord = getSecretWord();
 
     // reset guesses array
-    console.log('init: guesses before reset():\n', guesses);
+    // console.log('init: guesses before reset():\n', guesses);
     resetGuesses();
-    console.log('init: guesses after reset():\n', guesses);
+    // console.log('init: guesses after reset():\n', guesses);
 
     // reset letters used and game status
     lettersUsed = [];
@@ -145,7 +145,7 @@ function resetGuesses() {
     for (let i = 0; i < MAX_GUESSES; i++) {
         guesses[i] = [];
         for (let j = 0; j < WORD_LENGTH; j++) {
-            guesses[i][j] = { state: 0 };
+            guesses[i][j] = { state: '0' };
         }
     }
 }
@@ -171,6 +171,29 @@ function renderMessage() {
         // message to guess again
         const guessesLeft = MAX_GUESSES - numGuesses;
         messageEl.innerText = `Nice try! You have ${guessesLeft} guesses left...`;
+    }
+}
+
+// Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
+function renderGuesses() {
+
+    // console.log('renderGuesses: guesses - \n', guesses);
+
+    // loop through the guesses array
+    // get the element for that square and set the text and background color based on the object
+    for (let i = 0; i < MAX_GUESSES; i++) {
+        for (let j = 0; j < WORD_LENGTH; j++) {
+            const squareEl = document.getElementById(`g${i}l${j}`);
+            // console.log('squareEl key: \n',`g${i}l${j}`);
+            // console.log('squareEl: \n', squareEl);
+
+            // console.log('guesses[i][j]: \n', guesses[i][j]);
+            // console.log('guesses[i][j].state: \n', guesses[i][j].state);
+            // console.log('guesses[i][j].letter: \n', guesses[i][j].letter);
+            // only change the text if that square in guesses has a letter picked
+            if (guesses[i][j].letter) squareEl.innerText = guesses[i][j].letter;
+            squareEl.style.backgroundColor = LETTER_STATE_LOOKUP[guesses[i][j].state].color;
+        }
     }
 }
 
@@ -202,8 +225,8 @@ function renderButtons() {
 
 // Main render function
 function render() {
-    //   - Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
     renderMessage();
+    renderGuesses();
     renderKeys();
     renderButtons();
 }
