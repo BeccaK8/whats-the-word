@@ -366,6 +366,9 @@ function handleGuess() {
     // console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
     // console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
 
+    // if guess is not complete, then just return
+    if (!guessComplete) return;
+
     let exactMatchCount = 0;
     //   - for each letter in guess, 
     for (let idx in guesses[numGuesses]) {
