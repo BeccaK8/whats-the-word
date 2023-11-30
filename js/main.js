@@ -82,10 +82,9 @@ let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 console.log('Storing Elements: \n');
 const messageEl = document.querySelector('h2');
 console.log('message element: \n', messageEl);
-const guessButtonEl = document.getElementById('guess');
-console.log('guess button element: \n', guessButtonEl);
-const playAgainButtonEl = document.getElementById('playAgain');
-console.log('[play again button] element: \n', playAgainButtonEl);
+const buttonEl = document.querySelector('button');
+console.log('button element: \n', buttonEl);
+
 
 // TODO: Do I really need this?  May be able to delete
 // grab keyboard elements and save them to an array
@@ -114,8 +113,9 @@ function init() {
     resetGuesses();
     console.log('init: guesses after reset():\n', guesses);
 
-    // reset letters used state
+    // reset letters used and game status
     lettersUsed = [];
+    gameStatus = null;
 
     // TODO: remove this - for testing only:
     letters = {
@@ -151,8 +151,9 @@ function resetGuesses() {
 }
 
 // ===================================================== 
-// Render the appropriate message (make a guess, you win, you lose)
+// Render functions
 // ===================================================== 
+// Render the appropriate message (make a guess, you win, you lose)
 function renderMessage() {
     if (gameStatus === 'W') {
         // message user wins
@@ -173,9 +174,7 @@ function renderMessage() {
     }
 }
 
-// ===================================================== 
 // Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
-// ===================================================== 
 function renderKeys() {
     // Loop through the letters used array
     // for each letter, get the element for that key and change the background and font color
@@ -188,11 +187,25 @@ function renderKeys() {
     }
 }
 
+// Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
+function renderButtons() {
+    // if user wins or loses, set the id and text of the button to "Play Again"
+    if (gameStatus === 'W' || gameStatus === 'L') {
+        buttonEl.innerText = 'Play Again';
+        buttonEl.id = 'playAgain';
+    } else {
+        // otherwise, set the id and text of the button to "Guess"
+        buttonEl.innerText = 'Guess';
+        buttonEl.id = 'guess';
+    }
+}
+
+// Main render function
 function render() {
     //   - Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
-    //   - Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
     renderMessage();
     renderKeys();
+    renderButtons();
 }
 
 // ===================================================== 
