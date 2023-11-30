@@ -80,17 +80,11 @@ let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 //   - Play Again button
 //   - Guess square divs
 // ===================================================== 
-console.log('Storing Elements: \n');
 const messageEl = document.querySelector('h2');
-console.log('message element: \n', messageEl);
 const buttonEl = document.querySelector('button');
-console.log('button element: \n', buttonEl);
 
-
-// TODO: Do I really need this?  May be able to delete
 // grab keyboard elements and save them to an array
 const keysEls = [...document.querySelectorAll(".row > div")];
-console.log('keys element array: \n', keysEls);
 
 
 // ===================================================== 
@@ -312,22 +306,24 @@ function handleScreenKeyClick(evt) {
 
 // Update letters used to add letter if not there and to update state appropriately
 function updateLettersUsed(letter, state) {
-    console.log('updateLettersUsed: letter = \n', letter);
-    console.log('updateLettersUsed: state = \n', state);
-    console.log('updateLettersUsed: lettersUsed BEFORE = \n', lettersUsed);
+    // console.log('updateLettersUsed: letter = \n', letter);
+    // console.log('updateLettersUsed: state = \n', state);
+    // console.log('updateLettersUsed: lettersUsed BEFORE = \n', lettersUsed);
 
-    console.log('updateLettersUsed: lettersUsed[letter] BEFORE = \n', lettersUsed[letter]);
+    // console.log('updateLettersUsed: lettersUsed[letter] BEFORE = \n', lettersUsed[letter]);
     // see if state needs to be updated - only update it if it's not already used OR not already exact - once exact, it won't change
     if (!lettersUsed[letter] || lettersUsed[letter] !== 'e') {
         lettersUsed[letter] = state;
     }
 
-    console.log('updateLettersUsed: lettersUsed[letter] AFTER = \n', lettersUsed[letter]);
-    console.log('updateLettersUsed: lettersUsed AFTER = \n', lettersUsed);
+    // console.log('updateLettersUsed: lettersUsed[letter] AFTER = \n', lettersUsed[letter]);
+    // console.log('updateLettersUsed: lettersUsed AFTER = \n', lettersUsed);
 }
 
 // Compare square letter to secret word and update square state and letters used appropriately
 function checkSquare(squ, squIdx) {
+    
+    // TODO handle duplicate letters
 
     let squareState;
     if (squ.letter === secretWord.charAt(squIdx)) {
@@ -363,15 +359,10 @@ function handleGuess() {
         console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
 
         // Check the letter against the secret word
-        // TODO handle duplicate letters
-        
         checkSquare(square, idx);
         if (square.state === 'e') exactMatchCount++;
 
         // console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
-        // Check if letter at that spot is anywhere else in secret word.  If so, mark letter as "found but not exact match"
-        // Otherwise, mark letter as "not in secret word"
-
     };
 
     //   - Check for win - does guess equal mystery word
@@ -381,11 +372,11 @@ function handleGuess() {
         numGuesses++;  // to get it to actual number of guesses (1-based)
         player.recordWin();
     } else {
-        // Increment number of guesses and reset guess complete
+        // Increment number of guesses and reset guessComplete
         numGuesses++;
         guessComplete = false;
 
-        // have they run out of guesses
+        // have they run out of guesses and lost
         if (numGuesses === MAX_GUESSES) {
             gameStatus = 'L'; 
             player.recordLoss();
