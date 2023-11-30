@@ -179,38 +179,44 @@ function renderGuesses() {
     // console.log('renderGuesses: guesses - \n', guesses);
     // console.log('renderGuesses: numGuesses - \n', numGuesses);
 
-    // loop through the guesses array for the number of guesses made plus 1 (for the current guess that has not yet been submitted)
+    // loop through the guesses array
     // get the element for that square and set the text and background color based on the object
-    // TODO delte this if we get it to work the other way
-    //const numGuessesToRender = (numGuesses === MAX_GUESSES) ? numGuesses : numGuesses + 1;
     for (let i = 0; i < MAX_GUESSES; i++) {
         for (let j = 0; j < WORD_LENGTH; j++) {
             const squareEl = document.getElementById(`g${i}l${j}`);
+            const square = guesses[i][j];
             // console.log('squareEl key: \n',`g${i}l${j}`);
             // console.log('squareEl: \n', squareEl);
 
-            // console.log('guesses[i][j]: \n', guesses[i][j]);
-            // console.log('guesses[i][j].state: \n', guesses[i][j].state);
-            // console.log('guesses[i][j].letter: \n', guesses[i][j].letter);
+            // console.log('guesses[i][j]: \n', square);
+            // console.log('guesses[i][j].state: \n', square.state);
+            // console.log('guesses[i][j].letter: \n', square.letter);
             // change the text if that square in guesses has a letter picked; otherwise, change it to a '' to erase if backspace hit
-            squareEl.innerText = guesses[i][j].letter ? guesses[i][j].letter : '';
-            squareEl.style.backgroundColor = LETTER_STATE_LOOKUP[guesses[i][j].state].bgColor;
-            squareEl.style.color = LETTER_STATE_LOOKUP[guesses[i][j].state].color;
+            squareEl.innerText = square.letter ? square.letter : '';
+            squareEl.style.backgroundColor = LETTER_STATE_LOOKUP[square.state].bgColor;
+            squareEl.style.color = LETTER_STATE_LOOKUP[square.state].color;
         }
     }
 }
 
 // Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
 function renderKeys() {
-    // Loop through the letters used array
-    // for each letter, get the element for that key and change the background and font color
-    for (let letter in lettersUsed) {
-        // console.log('renderKeys - letter \n:', letters[letter]);
-        const keyEl = document.getElementById(letter);
+    // Loop through the keys eleements
+    // for each element see if it's letter has been used (if not, set to "unknown"  or 0)
+    // and change the background and font color
+ 
+    keysEls.forEach((keyEl) => {
+        const letter = keyEl.id;
+        // console.log('renderKeys - keyEl = \n', keyEl);
+        // console.log('renderKeys - letter \n:', letter);
+        // console.log('renderKeys - lettersUsed[letter] \n:', lettersUsed[letter]);
+        const letterState = lettersUsed[letter] ? lettersUsed[letter] : 0;
+        // console.log('renderKeys() - letterState = \n', letterState);
+        // console.log('renderKeys() - LETTER_STATE_LOOKUP[letterState] = \n', LETTER_STATE_LOOKUP[letterState]);
         // console.log('renderKeys - keyEl \n:', keyEl);
-        keyEl.style.backgroundColor = LETTER_STATE_LOOKUP[lettersUsed[letter]].bgColor;
-        keyEl.style.color = LETTER_STATE_LOOKUP[lettersUsed[letter]].color;
-    }
+        keyEl.style.backgroundColor = LETTER_STATE_LOOKUP[letterState].bgColor;
+        keyEl.style.color = LETTER_STATE_LOOKUP[letterState].color;
+    });
 }
 
 // Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
@@ -304,22 +310,42 @@ function handleScreenKeyClick(evt) {
 //   - Call Handle Selected Letter (below) with letter pressed
 // ===================================================== 
 
+// Update letters used to add letter if not there and to update state appropriately
+function updateLettersUsed(letter, state) {
+    console.log('updateLettersUsed: letter = \n', letter);
+    console.log('updateLettersUsed: state = \n', state);
+    console.log('updateLettersUsed: lettersUsed BEFORE = \n', lettersUsed);
+
+    console.log('updateLettersUsed: lettersUsed[letter] BEFORE = \n', lettersUsed[letter]);
+    // see if state needs to be updated - only update it if it's not already used OR not already exact - once exact, it won't change
+    if (!lettersUsed[letter] || lettersUsed[letter] !== 'e') {
+        lettersUsed[letter] = state;
+    }
+
+    console.log('updateLettersUsed: lettersUsed[letter] AFTER = \n', lettersUsed[letter]);
+    console.log('updateLettersUsed: lettersUsed AFTER = \n', lettersUsed);
+}
+
+// Compare square letter to secret word and update square state and letters used appropriately
 function checkSquare(squ, squIdx) {
 
+    let squareState;
     if (squ.letter === secretWord.charAt(squIdx)) {
         // exact match
-        squ.state = 'e';
+        squareState = 'e';
         // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is an exact match`);
     } else {
         // check for partial or no match
         if (secretWord.indexOf(squ.letter) > -1) {
             // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is a partial match`);
-            squ.state = 'p';
+            squareState = 'p';
         } else {
             // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is not a match`);
-            squ.state = 'n';
+            squareState = 'n';
         }
     }
+    updateLettersUsed(squ.letter, squareState);
+    squ.state = squareState;
 }
 
 // Handle Click of "GUESS" button:
@@ -331,8 +357,8 @@ function handleGuess() {
     //   - for each letter in guess, 
     for (let idx in guesses[numGuesses]) {
         let square = guesses[numGuesses][idx];
-        console.log('for in working - idx: \n', idx);
-        console.log('for in working - square: \n', square);
+        // console.log('for in working - idx: \n', idx);
+        // console.log('for in working - square: \n', square);
 
         console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
 
@@ -342,7 +368,7 @@ function handleGuess() {
         checkSquare(square, idx);
         if (square.state === 'e') exactMatchCount++;
 
-        console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
+        // console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
         // Check if letter at that spot is anywhere else in secret word.  If so, mark letter as "found but not exact match"
         // Otherwise, mark letter as "not in secret word"
 
@@ -377,7 +403,7 @@ function handlePlayAgain() {
 }
 // Need to determine if "GUESS" or "PLAY AGAIN" clicked
 function handleButtonClick(evt) {
-    console.log('handleButtonClick - evt.target.id: \n', evt.target.id);
+    // console.log('handleButtonClick - evt.target.id: \n', evt.target.id);
     if (evt.target.id === 'guess') {
         handleGuess();
     } else {
