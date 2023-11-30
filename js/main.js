@@ -255,6 +255,10 @@ function render() {
 
 // Handle Selected Letter
 function handleSelectedLetter(letter) {
+
+    // if the game is already  over, just return
+    if (isGameOver()) return;
+    
     let letterIdx = 0;   // this will be the index of the next empty letter in the guess
     // console.log('handleSelectedLetter: input letter: \n', letter);
     // console.log('handleSelectedLetter: guess square letter: \n', guesses[numGuesses][letterIdx].letter);
