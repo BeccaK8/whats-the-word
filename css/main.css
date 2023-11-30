@@ -112,12 +112,16 @@ button {
     background-color: white;
     color: black;
     border: 0.2vmin solid black;
-    border-radius: 0.4vmin;
+    border-radius: 0.8vmin;
     font-size: 2vmin;
+    padding: 1.5vmin;
 }
 
 button:hover, .guessComplete {
     background-color: green;
     color: white;
+    font-weight: bold;
+    border: 0.5vmin solid black;
+    transition: transform 150ms ease-in;
 }
 
