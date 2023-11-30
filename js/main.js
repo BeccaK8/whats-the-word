@@ -120,6 +120,11 @@ function init() {
 
 init();
 
+// is game over?
+function isGameOver() {
+    return gameStatus === 'W' || gameStatus === 'L';
+}
+
 // Get Secret Word - Select a random word from the master array and return it
 function getSecretWord() {
     const wordIdx = Math.floor(Math.random() * SECRET_WORD_LIST.length);
@@ -217,12 +222,15 @@ function renderKeys() {
 
 // Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
 function renderButtons() {
+
     // if user wins or loses, set the id and text of the button to "Play Again"
-    if (gameStatus === 'W' || gameStatus === 'L') {
+    if (isGameOver()) {
+        buttonEl.style.visibility = 'visible';
         buttonEl.innerText = 'Play Again';
         buttonEl.id = 'playAgain';
-    } else {
-        // otherwise, set the id and text of the button to "Guess"
+    } else if (guessComplete) {
+        // if the guess is complete, set the id and text of the button to "Guess"
+        buttonEl.style.visibility = 'visible';
         buttonEl.innerText = 'Guess';
         buttonEl.id = 'guess';
         // if the guess is complete, add a class that changes the button colors to entice them to enter their guess
@@ -231,6 +239,9 @@ function renderButtons() {
         } else {
             buttonEl.classList.remove('guessComplete');
         }
+    } else {
+        // hide the button if there's no action to be performed
+        buttonEl.style.visibility = 'hidden';
     }
 }
 
@@ -317,7 +328,7 @@ function handleKeyUp(evt) {
         handleSelectedLetter(evtKey);
     } else {
         // user submitted their guess using "enter" key
-        if (!gameStatus && guessComplete) handleGuess();
+        handleGuess();
     }
 }
 
@@ -361,13 +372,17 @@ function checkSquare(squ, squIdx) {
     squ.state = squareState;
 }
 
+function canHandleGuess() {
+    return !isGameOver() && guessComplete;
+}
+
 // Handle Click of "GUESS" button:
 function handleGuess() {
     // console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
     // console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
 
-    // if guess is not complete, then just return
-    if (!guessComplete) return;
+    // if we cannot process the guess for some return then just return
+    if (!canHandleGuess()) return;
 
     let exactMatchCount = 0;
     //   - for each letter in guess, 
