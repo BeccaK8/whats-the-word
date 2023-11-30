@@ -11,7 +11,7 @@
 //   - Maximum number of guesses
 // ===================================================== 
 // TODO: add test case for repeat letters - skunk
-const SECRET_WORD_LIST = ['stare', 'quota', 'jumpy', 'skimp'];
+const SECRET_WORD_LIST = ['STARE', 'QUOTA', 'JUMPY', 'SKIMP'];
 
 const LETTER_STATE_LOOKUP = {
     'e': {desc: 'Exact Match', color: 'rgb(10 123 55)'},
@@ -65,9 +65,11 @@ let player;   // instance of Player to hold the statistics for the current user
 let secretWord;   // secret word
 
 let guesses;  // an array of 6 nested arrays containing objects
-let letters;  // an array of 26 arrays where the key is the letter (from keyboard) and the value is it's letter state
+let lettersUsed;  // an array of used letters where the key is the letter (from keyboard) and the value is it's letter state
 
 let numGuesses;  // the number of guesses the player has made already
+
+let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 
 // ===================================================== 
 //                  DOM ELEMENTS
@@ -77,9 +79,7 @@ let numGuesses;  // the number of guesses the player has made already
 //   - Play Again button
 //   - Guess square divs
 // ===================================================== 
-console.log('\n============================\n');
 console.log('Storing Elements: \n');
-console.log('============================\n');
 const messageEl = document.querySelector('h2');
 console.log('message element: \n', messageEl);
 const guessButtonEl = document.getElementById('guess');
@@ -87,6 +87,7 @@ console.log('guess button element: \n', guessButtonEl);
 const playAgainButtonEl = document.getElementById('playAgain');
 console.log('[play again button] element: \n', playAgainButtonEl);
 
+// TODO: Do I really need this?  May be able to delete
 // grab keyboard elements and save them to an array
 const keysEls = [...document.querySelectorAll(".row > div")];
 console.log('keys element array: \n', keysEls);
@@ -113,18 +114,17 @@ function init() {
     resetGuesses();
     console.log('init: guesses after reset():\n', guesses);
 
-    // reset letters state
-    letters = [];
+    // reset letters used state
+    lettersUsed = [];
 
     // TODO: remove this - for testing only:
     letters = {
         A: 'e',
         S: 'p',
-        E: 'n'
+        E: 'n',
+        K: 'e'
     };
     
-
-    // TODO: call render() when it's ready
     render();
 }
 
@@ -151,26 +151,47 @@ function resetGuesses() {
 }
 
 // ===================================================== 
-// Render the screen:
+// Render the appropriate message (make a guess, you win, you lose)
+// ===================================================== 
+function renderMessage() {
+    if (gameStatus === 'W') {
+        // message user wins
+        messageEl.innerText = `Congratulations!  You won in ${numGuesses} guesses!`;
+    } else if (gameStatus === 'L') {
+        // message user ran out of turns
+        messageEl.innerHTML = `
+            So close!  The word was 
+            <span style="color: ${LETTER_STATE_LOOKUP['e'].color}">${secretWord}</span>
+        `;
+    } else if (numGuesses === 0) {
+        // message to get started
+        messageEl.innerText = "Let's play...";
+    } else {
+        // message to guess again
+        const guessesLeft = MAX_GUESSES - numGuesses;
+        messageEl.innerText = `Nice try! You have ${guessesLeft} guesses left...`;
+    }
+}
+
+// ===================================================== 
+// Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
 // ===================================================== 
 function renderKeys() {
-    // Loop through the keyboard key elements
-    // for each key, check if that letter has been selected and is in the letters array
-    // if so, change the background and font color
-    for (let letter in letters) {
+    // Loop through the letters used array
+    // for each letter, get the element for that key and change the background and font color
+    for (let letter in lettersUsed) {
         // console.log('renderKeys - letter \n:', letters[letter]);
         const keyEl = document.getElementById(letter);
         // console.log('renderKeys - keyEl \n:', keyEl);
-        keyEl.style.backgroundColor = LETTER_STATE_LOOKUP[letters[letter]].color;
+        keyEl.style.backgroundColor = LETTER_STATE_LOOKUP[lettersUsed[letter]].color;
         keyEl.style.color = 'white';
     }
 }
 
 function render() {
-    //   - Render the appropriate message (make a guess, you win, you lose)
     //   - Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
-    //   - Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
     //   - Render the button: "GUESS" if user has more tries or "PLAY AGAIN" if they lost
+    renderMessage();
     renderKeys();
 }
 
