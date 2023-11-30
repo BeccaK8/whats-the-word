@@ -152,7 +152,7 @@ function resetGuesses() {
 function renderMessage() {
     if (gameStatus === 'W') {
         // message user wins
-        messageEl.innerText = `Congratulations!  You won in ${numGuesses} guesses!`;
+        messageEl.innerText = `Congratulations!  You won in ${numGuesses} ${numGuesses === 1 ? 'guess' : 'guesses'}!`;
     } else if (gameStatus === 'L') {
         // message user ran out of turns
         messageEl.innerHTML = `
@@ -165,7 +165,7 @@ function renderMessage() {
     } else {
         // message to guess again
         const guessesLeft = MAX_GUESSES - numGuesses;
-        messageEl.innerText = `Nice try! You have ${guessesLeft} guesses left...`;
+        messageEl.innerText = `Nice try! You have ${guessesLeft} ${guessesLeft === 1 ? 'guess' : 'guesses'} left...`;
     }
 }
 
