@@ -302,21 +302,65 @@ function handleScreenKeyClick(evt) {
 // ===================================================== 
 
 
-// ===================================================== 
 // Handle Click of "GUESS" button:
-//   - Check for win - does guess equal mystery word
-//   - If no win, for each letter in guess, 
-//      = Check if letter at that spot is same as secret word at that spot.  If so, mark letter as "exact match"
-//      = Check if letter at that spot is anywhere else in secret word.  If so, mark letter as "found but not exact match"
-//      = Otherwise, mark letter as "not in secret word"
-//   - Increment number of guesses
-//   - If win or lose, update statistics
-// ===================================================== 
+function handleGuess() {
+    console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
+    console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
+
+    let exactMatchCount = 0;
+    //   - for each letter in guess, 
+    for (let idx in guesses[numGuesses]) {
+        let square = guesses[numGuesses][idx];
+        console.log('for in working - idx: \n', idx);
+        console.log('for in working - square: \n', square);
+
+        console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
+
+        // Check the letter against the secret word
+        // TODO handle duplicate letters
+
+        if (square.letter === secretWord.charAt(idx)) {
+            // exact match
+            // update guess square
+            square.state = 'e';
+            // update keyboard state
+            // update exact match count
+            exactMatchCount++;
+            console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is an exact match`);
+            console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
+        } else {
+            // check for partial or no match
+            if (secretWord.indexOf(square.letter) > -1) {
+                console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is a partial match`);
+                
+            } else {
+                console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is not a match`)
+            }
+        }
+        console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
+        // Check if letter at that spot is anywhere else in secret word.  If so, mark letter as "found but not exact match"
+        // Otherwise, mark letter as "not in secret word"
+    };
+    //   - Check for win - does guess equal mystery word
+    //   - Increment number of guesses
+    //   - If win or lose, update statistics
+
+}
 
 // ===================================================== 
 // Handle Click of "PLAY AGAIN" button:
 //   - Reinitialize game
 // ===================================================== 
+
+// Need to determine if "GUESS" or "PLAY AGAIN" clicked
+function handleButtonClick(evt) {
+    console.log('handleButtonClick - evt.target.id: \n', evt.target.id);
+    if (evt.target.id === 'guess') {
+        handleGuess();
+    } else {
+        // TODO handlePlayAgain();
+    }
+}
 
 // ===================================================== 
 // Handle Click of "Stats" button:
@@ -335,3 +379,5 @@ function handleScreenKeyClick(evt) {
 // ===================================================== 
 
 document.getElementById('keyboard').addEventListener('click', handleScreenKeyClick);
+
+buttonEl.addEventListener('click', handleButtonClick);
