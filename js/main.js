@@ -161,7 +161,7 @@ function renderMessage() {
         // message user ran out of turns
         messageEl.innerHTML = `
             So close!  The word was 
-            <span style="color: ${LETTER_STATE_LOOKUP['e'].color}">${secretWord}</span>
+            <span style="color: ${LETTER_STATE_LOOKUP['e'].bgColor}">${secretWord}</span>
         `;
     } else if (numGuesses === 0) {
         // message to get started
@@ -177,10 +177,12 @@ function renderMessage() {
 function renderGuesses() {
 
     // console.log('renderGuesses: guesses - \n', guesses);
+    // console.log('renderGuesses: numGuesses - \n', numGuesses);
 
     // loop through the guesses array for the number of guesses made plus 1 (for the current guess that has not yet been submitted)
     // get the element for that square and set the text and background color based on the object
-    for (let i = 0; i < numGuesses + 1; i++) {
+    const numGuessesToRender = (numGuesses === MAX_GUESSES) ? numGuesses : numGuesses + 1;
+    for (let i = 0; i < numGuessesToRender; i++) {
         for (let j = 0; j < WORD_LENGTH; j++) {
             const squareEl = document.getElementById(`g${i}l${j}`);
             // console.log('squareEl key: \n',`g${i}l${j}`);
@@ -301,11 +303,28 @@ function handleScreenKeyClick(evt) {
 //   - Call Handle Selected Letter (below) with letter pressed
 // ===================================================== 
 
+function checkSquare(squ, squIdx) {
+
+    if (squ.letter === secretWord.charAt(squIdx)) {
+        // exact match
+        squ.state = 'e';
+        // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is an exact match`);
+    } else {
+        // check for partial or no match
+        if (secretWord.indexOf(squ.letter) > -1) {
+            // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is a partial match`);
+            squ.state = 'p';
+        } else {
+            // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is not a match`);
+            squ.state = 'n';
+        }
+    }
+}
 
 // Handle Click of "GUESS" button:
 function handleGuess() {
-    console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
-    console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
+    // console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
+    // console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
 
     let exactMatchCount = 0;
     //   - for each letter in guess, 
@@ -318,41 +337,36 @@ function handleGuess() {
 
         // Check the letter against the secret word
         // TODO handle duplicate letters
+        
+        checkSquare(square, idx);
+        if (square.state === 'e') exactMatchCount++;
 
-        if (square.letter === secretWord.charAt(idx)) {
-            // exact match
-            // update guess square
-            square.state = 'e';
-            // update keyboard state
-            // update exact match count
-            exactMatchCount++;
-            console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is an exact match`);
-            console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
-        } else {
-            // check for partial or no match
-            if (secretWord.indexOf(square.letter) > -1) {
-                console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is a partial match`);
-                square.state = 'p';
-            } else {
-                console.log(`handleGuess - for in - square at idx ${idx} with letter ${square.letter} is not a match`);
-                square.state = 'n';
-            }
-        }
         console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
         // Check if letter at that spot is anywhere else in secret word.  If so, mark letter as "found but not exact match"
         // Otherwise, mark letter as "not in secret word"
-    };
-    //   - Check for win - does guess equal mystery word
-    
-    //   - Increment number of guesses and reset guess complete
-    numGuesses++;
-    guessComplete = false;
 
-    //   - If win or lose, update statistics
+    };
+
+    //   - Check for win - does guess equal mystery word
+    if (exactMatchCount === WORD_LENGTH) {
+        // they guessed the right word!
+        gameStatus = 'W';
+        numGuesses++;  // to get it to actual number of guesses (1-based)
+        player.recordWin();
+    } else {
+        // Increment number of guesses and reset guess complete
+        numGuesses++;
+        guessComplete = false;
+
+        // have they run out of guesses
+        if (numGuesses === MAX_GUESSES) {
+            gameStatus = 'L'; 
+            player.recordLoss();
+        }
+    }
 
     // update board
     render();
-
 }
 
 // ===================================================== 
