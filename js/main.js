@@ -189,8 +189,8 @@ function renderGuesses() {
             // console.log('guesses[i][j]: \n', guesses[i][j]);
             // console.log('guesses[i][j].state: \n', guesses[i][j].state);
             // console.log('guesses[i][j].letter: \n', guesses[i][j].letter);
-            // only change the text if that square in guesses has a letter picked
-            if (guesses[i][j].letter) squareEl.innerText = guesses[i][j].letter;
+            // change the text if that square in guesses has a letter picked; otherwise, change it to a '' to erase if backspace hit
+            squareEl.innerText = guesses[i][j].letter ? guesses[i][j].letter : '';
             squareEl.style.backgroundColor = LETTER_STATE_LOOKUP[guesses[i][j].state].bgColor;
             squareEl.style.color = LETTER_STATE_LOOKUP[guesses[i][j].state].color;
         }
@@ -220,10 +220,11 @@ function renderButtons() {
         // otherwise, set the id and text of the button to "Guess"
         buttonEl.innerText = 'Guess';
         buttonEl.id = 'guess';
-        // if the guess is complete, change the bg color to entice them to enter their guess
+        // if the guess is complete, add a class that changes the button colors to entice them to enter their guess
         if (guessComplete) {
-            buttonEl.style.backgroundColor = 'green';
-            buttonEl.style.color = 'white';
+            buttonEl.classList.add('guessComplete');
+        } else {
+            buttonEl.classList.remove('guessComplete');
         }
     }
 }
@@ -238,24 +239,40 @@ function render() {
 
 // Handle Selected Letter
 function handleSelectedLetter(letter) {
-    let letterIdx = 0;
-    console.log('handleSelectedLetter: input letter: \n', letter);
-    console.log('handleSelectedLetter: guess square letter: \n', guesses[numGuesses][letterIdx].letter);
+    let letterIdx = 0;   // this will be the index of the next empty letter in the guess
+    // console.log('handleSelectedLetter: input letter: \n', letter);
+    // console.log('handleSelectedLetter: guess square letter: \n', guesses[numGuesses][letterIdx].letter);
     
-    // TODO check if they hit the backspace button
+    // check if they hit the backspace button
+    const isBackspace = letter === 'backspace';
+    // console.log('handleSelectedLetter: isbackspace - \n', isBackspace);
 
     while (letterIdx < WORD_LENGTH && guesses[numGuesses][letterIdx].letter) {
-        console.log('handleSelectedLetter - in while with letterIdx of: \n', letterIdx);
+        // console.log('handleSelectedLetter - in while with letterIdx of: \n', letterIdx);
         letterIdx++;
     }
     console.log('handleSelectedLetter - out of while with letterIdx of: \n', letterIdx);
-    if (letterIdx < WORD_LENGTH) {
-        // Update current guess square state variable with letter clicked
-        guesses[numGuesses][letterIdx].letter = letter;
-        console.log('handleSelectedLetter: guess square: \n', guesses[numGuesses]);
-        console.log('handleSelectedLetter: guess complete?: \n', letterIdx === WORD_LENGTH - 1);
-        // If no more empty squares on current guess, mark guess as complete to trigger highlight of "GUESS" button
-        guessComplete = (letterIdx === WORD_LENGTH - 1);
+
+    if (isBackspace) {
+        // console.log('handleSelectedLetter - handling backspace - letterIdx: \n', letterIdx);
+        // make sure there is a letter to erase
+        if (letterIdx > 0) {
+            // if the user hit the backspace, we need to remove the last entered letter from the array
+            // console.log('handleSelectedLetter - handling backspace - letter at index - 1:\n', guesses[numGuesses][letterIdx-1].letter);
+            delete guesses[numGuesses][letterIdx-1].letter;
+            // console.log('handleSelectedLetter - handling backspace - letter at index - 1 after delete:\n', guesses[numGuesses][letterIdx-1].letter);
+            // reset guessComplete to false since we just deleted a letter
+        }
+        guessComplete = false;
+    } else {
+        if (letterIdx < WORD_LENGTH) {
+            // Update current guess square state variable with letter clicked
+            guesses[numGuesses][letterIdx].letter = letter;
+            // console.log('handleSelectedLetter: guess complete?: \n', letterIdx === WORD_LENGTH - 1);
+            // If no more empty squares on current guess, mark guess as complete to trigger highlight of "GUESS" button
+            guessComplete = (letterIdx === WORD_LENGTH - 1);
+        }
+        // console.log('handleSelectedLetter: guess square in if(letteridx<wordlength): \n', guesses[numGuesses]);
     }
 
     // update the board
