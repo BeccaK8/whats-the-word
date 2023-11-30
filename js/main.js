@@ -258,7 +258,7 @@ function handleSelectedLetter(letter) {
 
     // if the game is already  over, just return
     if (isGameOver()) return;
-    
+
     let letterIdx = 0;   // this will be the index of the next empty letter in the guess
     // console.log('handleSelectedLetter: input letter: \n', letter);
     // console.log('handleSelectedLetter: guess square letter: \n', guesses[numGuesses][letterIdx].letter);
@@ -331,8 +331,8 @@ function handleKeyUp(evt) {
     if (evt.code !== 'Enter') {
         handleSelectedLetter(evtKey);
     } else {
-        // user submitted their guess using "enter" key
-        handleGuess();
+        // user triggered the button using "enter" key so grab the current id of the element (guess or playAgain) and pass it through same logic as if button clicked
+        handleButtonAction(buttonEl.id);
     }
 }
 
@@ -431,14 +431,19 @@ function handlePlayAgain() {
     //   - Reinitialize game
     init();
 }
-// Need to determine if "GUESS" or "PLAY AGAIN" clicked
-function handleButtonClick(evt) {
-    // console.log('handleButtonClick - evt.target.id: \n', evt.target.id);
-    if (evt.target.id === 'guess') {
+
+// Need to determine if "GUESS" or "PLAY AGAIN" clicked - making it generic to work for both button click and ENTER keyup
+function handleButtonAction(action) {
+    if (action === 'guess') {
         handleGuess();
     } else {
         handlePlayAgain();
     }
+}
+
+function handleButtonClick(evt) {
+    // console.log('handleButtonClick - evt.target.id: \n', evt.target.id);
+    handleButtonAction(evt.target.id);
 }
 
 // ===================================================== 
