@@ -14,10 +14,10 @@
 const SECRET_WORD_LIST = ['STARE', 'QUOTA', 'JUMPY', 'SKIMP'];
 
 const LETTER_STATE_LOOKUP = {
-    'e': {desc: 'Exact Match', color: 'rgb(10 123 55)'},
-    'p': {desc: 'Partial Match', color: 'rgb(255 192 0)'},
-    'n': {desc: 'No Match', color: 'rgb(89 89 89)'},
-    '0': {desc: 'Unknown', color: 'white'}
+    'e': {desc: 'Exact Match', bgColor: 'rgb(10 123 55)', color: 'white'},
+    'p': {desc: 'Partial Match', bgColor: 'rgb(255 192 0)', color: 'white'},
+    'n': {desc: 'No Match', bgColor: 'rgb(89 89 89)', color: 'white'},
+    '0': {desc: 'Unknown', bgColor: 'white', color: 'black'}
 };
 
 const MAX_GUESSES = 6;
@@ -69,6 +69,7 @@ let lettersUsed;  // an array of used letters where the key is the letter (from 
 
 let numGuesses;  // the number of guesses the player has made already
 
+let guessComplete;
 let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 
 // ===================================================== 
@@ -116,6 +117,7 @@ function init() {
     // reset letters used and game status
     lettersUsed = [];
     gameStatus = null;
+    guessComplete = false;
 
     // TODO: remove this - for testing only:
     letters = {
@@ -150,9 +152,6 @@ function resetGuesses() {
     }
 }
 
-// ===================================================== 
-// Render functions
-// ===================================================== 
 // Render the appropriate message (make a guess, you win, you lose)
 function renderMessage() {
     if (gameStatus === 'W') {
@@ -179,9 +178,9 @@ function renderGuesses() {
 
     // console.log('renderGuesses: guesses - \n', guesses);
 
-    // loop through the guesses array
+    // loop through the guesses array for the number of guesses made plus 1 (for the current guess that has not yet been submitted)
     // get the element for that square and set the text and background color based on the object
-    for (let i = 0; i < MAX_GUESSES; i++) {
+    for (let i = 0; i < numGuesses + 1; i++) {
         for (let j = 0; j < WORD_LENGTH; j++) {
             const squareEl = document.getElementById(`g${i}l${j}`);
             // console.log('squareEl key: \n',`g${i}l${j}`);
@@ -192,7 +191,8 @@ function renderGuesses() {
             // console.log('guesses[i][j].letter: \n', guesses[i][j].letter);
             // only change the text if that square in guesses has a letter picked
             if (guesses[i][j].letter) squareEl.innerText = guesses[i][j].letter;
-            squareEl.style.backgroundColor = LETTER_STATE_LOOKUP[guesses[i][j].state].color;
+            squareEl.style.backgroundColor = LETTER_STATE_LOOKUP[guesses[i][j].state].bgColor;
+            squareEl.style.color = LETTER_STATE_LOOKUP[guesses[i][j].state].color;
         }
     }
 }
@@ -205,8 +205,8 @@ function renderKeys() {
         // console.log('renderKeys - letter \n:', letters[letter]);
         const keyEl = document.getElementById(letter);
         // console.log('renderKeys - keyEl \n:', keyEl);
-        keyEl.style.backgroundColor = LETTER_STATE_LOOKUP[lettersUsed[letter]].color;
-        keyEl.style.color = 'white';
+        keyEl.style.backgroundColor = LETTER_STATE_LOOKUP[lettersUsed[letter]].bgColor;
+        keyEl.style.color = LETTER_STATE_LOOKUP[lettersUsed[letter]].color;
     }
 }
 
@@ -220,6 +220,11 @@ function renderButtons() {
         // otherwise, set the id and text of the button to "Guess"
         buttonEl.innerText = 'Guess';
         buttonEl.id = 'guess';
+        // if the guess is complete, change the bg color to entice them to enter their guess
+        if (guessComplete) {
+            buttonEl.style.backgroundColor = 'green';
+            buttonEl.style.color = 'white';
+        }
     }
 }
 
@@ -231,12 +236,46 @@ function render() {
     renderButtons();
 }
 
-// ===================================================== 
+// Handle Selected Letter
+function handleSelectedLetter(letter) {
+    let letterIdx = 0;
+    console.log('handleSelectedLetter: input letter: \n', letter);
+    console.log('handleSelectedLetter: guess square letter: \n', guesses[numGuesses][letterIdx].letter);
+    
+    // TODO check if they hit the backspace button
+
+    while (letterIdx < WORD_LENGTH && guesses[numGuesses][letterIdx].letter) {
+        console.log('handleSelectedLetter - in while with letterIdx of: \n', letterIdx);
+        letterIdx++;
+    }
+    console.log('handleSelectedLetter - out of while with letterIdx of: \n', letterIdx);
+    if (letterIdx < WORD_LENGTH) {
+        // Update current guess square state variable with letter clicked
+        guesses[numGuesses][letterIdx].letter = letter;
+        console.log('handleSelectedLetter: guess square: \n', guesses[numGuesses]);
+        console.log('handleSelectedLetter: guess complete?: \n', letterIdx === WORD_LENGTH - 1);
+        // If no more empty squares on current guess, mark guess as complete to trigger highlight of "GUESS" button
+        guessComplete = (letterIdx === WORD_LENGTH - 1);
+    }
+
+    // update the board
+    render();
+}
+
 // Handle Click of Screen "Keyboard" Buttons:
-//   - Check if "letter" button clicked - if not, ignore click
-//   - Capture "letter" of button clicked
-//   - Call Handle Selected Letter (below) with letter clicked
-// ===================================================== 
+function handleScreenKeyClick(evt) {
+    // console.log('handleScreenKeyClick - this was clicked: \n', evt.target.tagName);
+    
+    // Check if "letter" div clicked - if not, ignore click
+    if (evt.target.tagName !== 'DIV') { return; }
+
+    // Capture "letter" of button clicked
+    const letterClicked = evt.target.id;
+    console.log('handleScreenKeyClick - letter id: \n', letterClicked);
+
+    // Call Handle Selected Letter (below) with letter clicked
+    handleSelectedLetter(letterClicked);
+}
 
 // ===================================================== 
 // Handle Press of Keyboard
@@ -245,13 +284,6 @@ function render() {
 //   - Call Handle Selected Letter (below) with letter pressed
 // ===================================================== 
 
-// ===================================================== 
-// Handle Selected Letter
-//   - Update current guess square state variable with letter clicked
-//   - Advance to next letter square on current guess
-//   - If no more empty squares on current guess, highlight "GUESS" button
-//   - Render changes to screen
-// ===================================================== 
 
 // ===================================================== 
 // Handle Click of "GUESS" button:
@@ -280,3 +312,9 @@ function render() {
 // Handle Click of "Help" button:
 //   - Overlay the instructions on screen
 // ===================================================== 
+
+// ===================================================== 
+//                 EVENT LISTENERS
+// ===================================================== 
+
+document.getElementById('keyboard').addEventListener('click', handleScreenKeyClick);
