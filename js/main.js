@@ -110,23 +110,15 @@ function init() {
     secretWord = getSecretWord();
 
     // reset guesses array
-    // console.log('init: guesses before reset():\n', guesses);
+    console.log('init: guesses before reset():\n', guesses);
     resetGuesses();
-    // console.log('init: guesses after reset():\n', guesses);
+    console.log('init: guesses after reset():\n', guesses);
 
     // reset letters used and game status
     lettersUsed = [];
     gameStatus = null;
     guessComplete = false;
 
-    // TODO: remove this - for testing only:
-    letters = {
-        A: 'e',
-        S: 'p',
-        E: 'n',
-        K: 'e'
-    };
-    
     render();
 }
 
@@ -141,13 +133,21 @@ function getSecretWord() {
 }
 
 // Reset Guesses Array - Reinitialize guesses to be a two-dimensional array
-//  of objects - initially containing just a state of 0 (or unknown)
+//  of objects - initially containing just a state of 0 (or unknown), with all letter k:v's deleted
 function resetGuesses() {
+    // console.log('resetGuesses - guesses before: \n', guesses);
     guesses = new Array(MAX_GUESSES);
     for (let i = 0; i < MAX_GUESSES; i++) {
+        // console.log(`resetGuesses - outer i loop - i=${i}`);
+        // console.log('AND guesses[i] = \n', guesses[i]);
         guesses[i] = [];
+        
         for (let j = 0; j < WORD_LENGTH; j++) {
+            // console.log(`BEFORE resetGuesses - inner j loop - i=${i} j=${j}`);
+            // console.log('AND guesses[i] BEFORE = \n', guesses[i][j]);
             guesses[i][j] = { state: '0' };
+            // console.log(`AFTER STATE CHANGE resetGuesses - inner j loop - i=${i} j=${j}`);
+            // console.log('AND guesses[i] AFTER STATE CHANGE = \n', guesses[i][j]);
         }
     }
 }
@@ -181,8 +181,9 @@ function renderGuesses() {
 
     // loop through the guesses array for the number of guesses made plus 1 (for the current guess that has not yet been submitted)
     // get the element for that square and set the text and background color based on the object
-    const numGuessesToRender = (numGuesses === MAX_GUESSES) ? numGuesses : numGuesses + 1;
-    for (let i = 0; i < numGuessesToRender; i++) {
+    // TODO delte this if we get it to work the other way
+    //const numGuessesToRender = (numGuesses === MAX_GUESSES) ? numGuesses : numGuesses + 1;
+    for (let i = 0; i < MAX_GUESSES; i++) {
         for (let j = 0; j < WORD_LENGTH; j++) {
             const squareEl = document.getElementById(`g${i}l${j}`);
             // console.log('squareEl key: \n',`g${i}l${j}`);
@@ -369,18 +370,18 @@ function handleGuess() {
     render();
 }
 
-// ===================================================== 
 // Handle Click of "PLAY AGAIN" button:
-//   - Reinitialize game
-// ===================================================== 
-
+function handlePlayAgain() {
+    //   - Reinitialize game
+    init();
+}
 // Need to determine if "GUESS" or "PLAY AGAIN" clicked
 function handleButtonClick(evt) {
     console.log('handleButtonClick - evt.target.id: \n', evt.target.id);
     if (evt.target.id === 'guess') {
         handleGuess();
     } else {
-        // TODO handlePlayAgain();
+        handlePlayAgain();
     }
 }
 
