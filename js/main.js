@@ -348,35 +348,13 @@ function updateLettersUsed(letter, state) {
     // console.log('updateLettersUsed: lettersUsed[letter] BEFORE = \n', lettersUsed[letter]);
     // see if state needs to be updated - only update it if it's not already used OR not already exact - once exact, it won't change
     if (!lettersUsed[letter] || lettersUsed[letter] !== 'e') {
+        // unless the existing state is PARTIAL and the new state is NOT FOUND -- repeat letter scenario
+        if (lettersUsed[letter] === 'p' && state === 'n') return;
         lettersUsed[letter] = state;
     }
 
     // console.log('updateLettersUsed: lettersUsed[letter] AFTER = \n', lettersUsed[letter]);
     // console.log('updateLettersUsed: lettersUsed AFTER = \n', lettersUsed);
-}
-// TODO maybe delete checkSquare when new logic works
-// Compare square letter to secret word and update square state and letters used appropriately
-function checkSquare(squ, squIdx) {
-    
-    // TODO handle duplicate letters
-
-    let squareState;
-    if (squ.letter === secretWord.charAt(squIdx)) {
-        // exact match
-        squareState = 'e';
-        // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is an exact match`);
-    } else {
-        // check for partial or no match
-        if (secretWord.indexOf(squ.letter) > -1) {
-            // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is a partial match`);
-            squareState = 'p';
-        } else {
-            // console.log(`handleGuess - for in - square at idx ${squIdx} with letter ${squ.letter} is not a match`);
-            squareState = 'n';
-        }
-    }
-    updateLettersUsed(squ.letter, squareState);
-    squ.state = squareState;
 }
 
 function canHandleGuess() {
@@ -424,8 +402,6 @@ function checkGuess(guess) {
                 guess[idx].state = getLetterState(letter, idx);
             } else {
                 // handle repeats
-                // check for duplicates
-                // is letter repeated in guess? in secret?
                 const guessLetterIndexes = guessLetters[letter];
                 const secretRptIndexes = [];
                 for (let i = 0; i < secretWord.length; i++) {
@@ -437,35 +413,27 @@ function checkGuess(guess) {
                     // can still process normally
                     guessLetterIndexes.forEach((idx) => guess[idx].state = getLetterState(letter, idx));
                 } else {
-                    // need to handle where more in guess than secret
+                    // Handle scenario where the letter is repeated more in guess than secret
 
                     // handle exact matches first
-                    // loop through indexes of that letter in the secret word (since fewer here)
-                    // if that index is in guess letter index array - its an exact match so just get letter state normally
-                    //    and pop that index off of the guess letter array and secret word array
                     let exactMatchCount = 0;
+                    // loop through indexes of that letter in the secret word (since fewer here)
                     secretRptIndexes.forEach((idx) => {
                         // if the index of the letter in secret word matches one of the indexes that same letter is in for guess
                         const matchLetterIndex = guessLetterIndexes.indexOf(idx.toString());
+                        // if that index is in guess letter index array - its an exact match so just get letter state normally
                         if (matchLetterIndex > -1) {
                             guess[idx].state = 'e';
+                            //    and pop that index off of the guess letter array and secret word array
                             guessLetterIndexes.splice(matchLetterIndex, 1);
                             exactMatchCount++;
                         }
-                        
                     });
-                    
-                    // now let's remove the same number of elements from secretRptIndexes that were found to be exact matches
-                    // it doesn't matter which values we remove, all we need when this is over is the count of repeats left unmatched in the secret word
-                    for (let j = 0; j < exactMatchCount; j++) {
-                        secretRptIndexes.pop();
-                    }
-                    // console.log('handle repeats: secretRpIndexes AFTER pop = \n', secretRptIndexes);
 
-                    // of the remaining, get the count (x) of non-exact in secret word and change that many in guess to PARTIAL; the remaining in guess letter array to NOT FOUND
-                    let partialCount = secretRptIndexes.length;
+                    // of the remaining, a subset may be PARTIAL, the rest will be NOT FOUND
+                    let partialCount = secretRptIndexes.length - exactMatchCount;
                     guessLetterIndexes.forEach((glIdx) => {
-                        // console.log('handle repeats - partial count = \n', partialCount);
+                        console.log('handle repeats - partial count = \n', partialCount);
                         // console.log('handle repeats - now need to mark the p and n: glIdx = \n', glIdx);
                         guess[glIdx].state = (partialCount > 0) ? 'p' : 'n';
                         partialCount--;
@@ -486,7 +454,7 @@ function checkGuess(guess) {
 function handleGuess() {
     // console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
     // console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
-    console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
+    // console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
 
     // if we cannot process the guess for some return then just return
     if (!canHandleGuess()) return;
