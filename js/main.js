@@ -10,22 +10,25 @@
 //       = Unknown ==> letter has not been tried yet (white)
 //   - Maximum number of guesses
 // ===================================================== 
-// TODO: add test case for repeat letters - skunk
-const SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS'];
-//const SECRET_WORD_LIST = ['STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
+const SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS', 'STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
+
+const EXACT_MATCH = 'e';
+const PARTIAL_MATCH = 'p';
+const NO_MATCH = 'n';
+const UNKNOWN = 0;
 
 const LETTER_STATE_LOOKUP = {
-    'e': {desc: 'Exact Match', bgColor: 'rgb(10 123 55)', color: 'white'},
-    'p': {desc: 'Partial Match', bgColor: 'rgb(255 192 0)', color: 'white'},
-    'n': {desc: 'No Match', bgColor: 'rgb(89 89 89)', color: 'white'},
-    '0': {desc: 'Unknown', bgColor: 'white', color: 'black'}
+    [EXACT_MATCH]: {desc: 'Exact Match', bgColor: 'rgb(10 123 55)', color: 'white'},
+    [PARTIAL_MATCH]: {desc: 'Partial Match', bgColor: 'rgb(255 192 0)', color: 'white'},
+    [NO_MATCH]: {desc: 'No Match', bgColor: 'rgb(89 89 89)', color: 'white'},
+    [UNKNOWN]: {desc: 'Unknown', bgColor: 'white', color: 'black'}
 };
-
-const VALID_KEYUP_KEYS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 
 const MAX_GUESSES = 6;
 const WORD_LENGTH = 5;
 
+const WIN = 'W';
+const LOSS = 'L';
 
 // ===================================================== 
 //                  CLASSES
@@ -50,7 +53,6 @@ class Player {
         this.winStreak = 0;
     }
 }
-
 
 // ===================================================== 
 //                  STATE VARIABLES
@@ -85,12 +87,10 @@ let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 // ===================================================== 
 const messageEl = document.querySelector('h2');
 const buttonEl = document.getElementsByClassName('button')[0];
-console.log('buttonEl: \n', buttonEl);
-// const buttonEl = document.querySelector('button');
+// console.log('buttonEl: \n', buttonEl);
 
 // grab keyboard elements and save them to an array
 const keysEls = [...document.querySelectorAll(".row > div")];
-
 
 // ===================================================== 
 //                 FUNCTIONS
@@ -125,7 +125,7 @@ init();
 
 // is game over?
 function isGameOver() {
-    return gameStatus === 'W' || gameStatus === 'L';
+    return gameStatus === WIN || gameStatus === LOSS;
 }
 
 // Get Secret Word - Select a random word from the master array and return it
@@ -149,7 +149,7 @@ function resetGuesses() {
         for (let j = 0; j < WORD_LENGTH; j++) {
             // console.log(`BEFORE resetGuesses - inner j loop - i=${i} j=${j}`);
             // console.log('AND guesses[i] BEFORE = \n', guesses[i][j]);
-            guesses[i][j] = { state: '0' };
+            guesses[i][j] = { state: UNKNOWN };
             // console.log(`AFTER STATE CHANGE resetGuesses - inner j loop - i=${i} j=${j}`);
             // console.log('AND guesses[i] AFTER STATE CHANGE = \n', guesses[i][j]);
         }
@@ -158,10 +158,10 @@ function resetGuesses() {
 
 // Render the appropriate message (make a guess, you win, you lose)
 function renderMessage() {
-    if (gameStatus === 'W') {
+    if (gameStatus === WIN) {
         // message user wins
         messageEl.innerText = `Congratulations!  You won in ${numGuesses} ${numGuesses === 1 ? 'guess' : 'guesses'}!`;
-    } else if (gameStatus === 'L') {
+    } else if (gameStatus === LOSS) {
         // message user ran out of turns
         messageEl.innerHTML = `
             So close!  The word was 
@@ -179,10 +179,6 @@ function renderMessage() {
 
 // Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
 function renderGuesses() {
-
-    // console.log('renderGuesses: guesses - \n', guesses);
-    // console.log('renderGuesses: numGuesses - \n', numGuesses);
-
     // loop through the guesses array
     // get the element for that square and set the text and background color based on the object
     for (let i = 0; i < MAX_GUESSES; i++) {
@@ -214,7 +210,7 @@ function renderKeys() {
         // console.log('renderKeys - keyEl = \n', keyEl);
         // console.log('renderKeys - letter \n:', letter);
         // console.log('renderKeys - lettersUsed[letter] \n:', lettersUsed[letter]);
-        const letterState = lettersUsed[letter] ? lettersUsed[letter] : 0;
+        const letterState = lettersUsed[letter] ? lettersUsed[letter] : UNKNOWN;
         // console.log('renderKeys() - letterState = \n', letterState);
         // console.log('renderKeys() - LETTER_STATE_LOOKUP[letterState] = \n', LETTER_STATE_LOOKUP[letterState]);
         // console.log('renderKeys - keyEl \n:', keyEl);
@@ -347,9 +343,9 @@ function updateLettersUsed(letter, state) {
 
     // console.log('updateLettersUsed: lettersUsed[letter] BEFORE = \n', lettersUsed[letter]);
     // see if state needs to be updated - only update it if it's not already used OR not already exact - once exact, it won't change
-    if (!lettersUsed[letter] || lettersUsed[letter] !== 'e') {
+    if (!lettersUsed[letter] || lettersUsed[letter] !== EXACT_MATCH) {
         // unless the existing state is PARTIAL and the new state is NOT FOUND -- repeat letter scenario
-        if (lettersUsed[letter] === 'p' && state === 'n') return;
+        if (lettersUsed[letter] === PARTIAL_MATCH && state === NO_MATCH) return;
         lettersUsed[letter] = state;
     }
 
@@ -363,7 +359,7 @@ function canHandleGuess() {
 
 // Get state of given letter relative to secretWord at the given index
 function getLetterState(letter, idx) {
-    return (secretWord.includes(letter)) ? ((secretWord.charAt(idx) === letter) ? 'e' : 'p') : 'n';
+    return (secretWord.includes(letter)) ? ((secretWord.charAt(idx) === letter) ? EXACT_MATCH : PARTIAL_MATCH) : NO_MATCH;
 }
 
 // Compare guess (argument is an array of square objects) to secret word and update square state and letters used appropriately
@@ -388,9 +384,9 @@ function checkGuess(guess) {
     if (guessWord === secretWord) {
         //update guess states and game status
         for (let idx in guess) {
-            guess[idx].state = 'e';
+            guess[idx].state = EXACT_MATCH;
         }
-        gameStatus = 'W';
+        gameStatus = WIN;
     } else {
         // guess is not the secret word
         // for each unique letter in guess
@@ -423,7 +419,7 @@ function checkGuess(guess) {
                         const matchLetterIndex = guessLetterIndexes.indexOf(idx.toString());
                         // if that index is in guess letter index array - its an exact match so just get letter state normally
                         if (matchLetterIndex > -1) {
-                            guess[idx].state = 'e';
+                            guess[idx].state = EXACT_MATCH;
                             //    and pop that index off of the guess letter array and secret word array
                             guessLetterIndexes.splice(matchLetterIndex, 1);
                             exactMatchCount++;
@@ -435,7 +431,7 @@ function checkGuess(guess) {
                     guessLetterIndexes.forEach((glIdx) => {
                         console.log('handle repeats - partial count = \n', partialCount);
                         // console.log('handle repeats - now need to mark the p and n: glIdx = \n', glIdx);
-                        guess[glIdx].state = (partialCount > 0) ? 'p' : 'n';
+                        guess[glIdx].state = (partialCount > 0) ? PARTIAL_MATCH : NO_MATCH;
                         partialCount--;
                     });
                 }
@@ -462,7 +458,7 @@ function handleGuess() {
     checkGuess(guesses[numGuesses]);
 
     //   - Check for win - does guess equal mystery word
-    if (gameStatus === 'W') {
+    if (gameStatus === WIN) {
         // they guessed the right word!
         numGuesses++;  // to get it to actual number of guesses (1-based)
         player.recordWin();
@@ -473,54 +469,7 @@ function handleGuess() {
 
         // have they run out of guesses and lost
         if (numGuesses === MAX_GUESSES) {
-            gameStatus = 'L'; 
-            player.recordLoss();
-        }
-    }
-
-    // update board
-    render();
-}
-
-
-// TODO REMOVE handleGuessOLD once we get new one working - may also be able to delete checkSquare()
-function handleGuessOLD() {
-    // console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
-    // console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
-
-    // if we cannot process the guess for some return then just return
-    if (!canHandleGuess()) return;
-
-    let exactMatchCount = 0;
-    //   - for each letter in guess, 
-    for (let idx in guesses[numGuesses]) {
-        let square = guesses[numGuesses][idx];
-        // console.log('for in working - idx: \n', idx);
-        // console.log('for in working - square: \n', square);
-
-        console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
-
-        // Check the letter against the secret word
-        checkSquare(square, idx);
-        if (square.state === 'e') exactMatchCount++;
-
-        // console.log(`handleGuess - for in - count of exact matches: \n ${exactMatchCount}`);
-    };
-
-    //   - Check for win - does guess equal mystery word
-    if (exactMatchCount === WORD_LENGTH) {
-        // they guessed the right word!
-        gameStatus = 'W';
-        numGuesses++;  // to get it to actual number of guesses (1-based)
-        player.recordWin();
-    } else {
-        // Increment number of guesses and reset guessComplete
-        numGuesses++;
-        guessComplete = false;
-
-        // have they run out of guesses and lost
-        if (numGuesses === MAX_GUESSES) {
-            gameStatus = 'L'; 
+            gameStatus = LOSS; 
             player.recordLoss();
         }
     }
