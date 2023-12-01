@@ -11,7 +11,7 @@
 //   - Maximum number of guesses
 // ===================================================== 
 // TODO: add test case for repeat letters - skunk
-const SECRET_WORD_LIST = ['SKANT', 'STANK', 'SUSIS'];
+const SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS'];
 //const SECRET_WORD_LIST = ['STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
 
 const LETTER_STATE_LOOKUP = {
@@ -385,14 +385,13 @@ function canHandleGuess() {
 
 // Get state of given letter relative to secretWord at the given index
 function getLetterState(letter, idx) {
-    console.log(`getletterstate for letter ${letter} and idx ${idx}`);
     return (secretWord.includes(letter)) ? ((secretWord.charAt(idx) === letter) ? 'e' : 'p') : 'n';
 }
 
 // Compare guess (argument is an array of square objects) to secret word and update square state and letters used appropriately
 function checkGuess(guess) {
 
-    console.log('checkGuess - guess argument: \n', guess);
+    // console.log('checkGuess - guess argument: \n', guess);
     
     // build guessWord from guess array of square objects
     // and an array of letters in 
@@ -404,8 +403,8 @@ function checkGuess(guess) {
         if (!guessLetters[letter]) guessLetters[letter] = [];
         guessLetters[letter].push(idx);
     };
-    console.log('checkGuess - guessLetters: \n', guessLetters);
-    console.log('handleGuess - guessWord: \n', guessWord);
+    // console.log('checkGuess - guessLetters: \n', guessLetters);
+    // console.log('handleGuess - guessWord: \n', guessWord);
 
     // check to see if match
     if (guessWord === secretWord) {
@@ -418,7 +417,7 @@ function checkGuess(guess) {
         // guess is not the secret word
         // for each unique letter in guess
         for (let letter in guessLetters) {
-            console.log('guessLetters[letter].length: \n', guessLetters[letter].length);
+            // console.log('guessLetters[letter].length: \n', guessLetters[letter].length);
             // if the letter only exists once in guess, then process normally
             if (guessLetters[letter].length === 1) {
                 let idx = guessLetters[letter][0];
@@ -427,24 +426,56 @@ function checkGuess(guess) {
                 // handle repeats
                 // check for duplicates
                 // is letter repeated in guess? in secret?
+                const guessLetterIndexes = guessLetters[letter];
                 const secretRptIndexes = [];
                 for (let i = 0; i < secretWord.length; i++) {
                     if (secretWord[i] === letter) {
                         secretRptIndexes.push(i);
                     }
                 }
-                if (secretRptIndexes.length >= guessLetters[letter].length) {
+                if (secretRptIndexes.length >= guessLetterIndexes.length) {
                     // can still process normally
-                    guessLetters[letter].forEach((idx) => guess[idx].state = getLetterState(letter, idx));
+                    guessLetterIndexes.forEach((idx) => guess[idx].state = getLetterState(letter, idx));
                 } else {
                     // need to handle where more in guess than secret
+
+                    // handle exact matches first
+                    // loop through indexes of that letter in the secret word (since fewer here)
+                    // if that index is in guess letter index array - its an exact match so just get letter state normally
+                    //    and pop that index off of the guess letter array and secret word array
+                    let exactMatchCount = 0;
+                    secretRptIndexes.forEach((idx) => {
+                        // if the index of the letter in secret word matches one of the indexes that same letter is in for guess
+                        const matchLetterIndex = guessLetterIndexes.indexOf(idx.toString());
+                        if (matchLetterIndex > -1) {
+                            guess[idx].state = 'e';
+                            guessLetterIndexes.splice(matchLetterIndex, 1);
+                            exactMatchCount++;
+                        }
+                        
+                    });
+                    
+                    // now let's remove the same number of elements from secretRptIndexes that were found to be exact matches
+                    // it doesn't matter which values we remove, all we need when this is over is the count of repeats left unmatched in the secret word
+                    for (let j = 0; j < exactMatchCount; j++) {
+                        secretRptIndexes.pop();
+                    }
+                    // console.log('handle repeats: secretRpIndexes AFTER pop = \n', secretRptIndexes);
+
+                    // of the remaining, get the count (x) of non-exact in secret word and change that many in guess to PARTIAL; the remaining in guess letter array to NOT FOUND
+                    let partialCount = secretRptIndexes.length;
+                    guessLetterIndexes.forEach((glIdx) => {
+                        // console.log('handle repeats - partial count = \n', partialCount);
+                        // console.log('handle repeats - now need to mark the p and n: glIdx = \n', glIdx);
+                        guess[glIdx].state = (partialCount > 0) ? 'p' : 'n';
+                        partialCount--;
+                    });
                 }
             }
         }
     }
-    
-    // TODO handle duplicate letters
 
+    // update the keyboard state
     for (let idx in guess) {
         updateLettersUsed(guess[idx].letter, guess[idx].state);
     }
@@ -453,8 +484,8 @@ function checkGuess(guess) {
 
 // Handle Click of "GUESS" button:
 function handleGuess() {
-    console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
-    console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
+    // console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
+    // console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
     console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
 
     // if we cannot process the guess for some return then just return
