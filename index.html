@@ -12,7 +12,7 @@
         <!-- help/stats nav -->
         <div id="nav">
             <img src="imgs/stats.png" alt="Statistics" class="navIcon">
-            <img src="imgs/help.png" alt="Help" class="navIcon">
+            <a href="#" id="popup-help-link"><img src="imgs/help.png" alt="Help" class="navIcon"></a>
         </div>
         <img src="imgs/gameLogo.png" alt="What's the Word?!">
     </header>
@@ -101,5 +101,24 @@
         <div class="button"></div>
 
     </main>
+
+    <div id="popup-help-window">
+        <div id="close-help">X</div>
+        <h3>How to Play</h3>
+        <p>Guess the Word in 6 tries.</p>
+        <ul>
+            <li>Each guess must be a 5-letter word.</li>
+            <li>The color of the square will change to show how close your guess was to the word.</li>
+        </ul>
+        <div id="colorHelp">
+            <div class="colorImgTile"><img class="helpImg" src="imgs/help/exactMatch.png" alt="Exact Match"></div>
+            <div class="colorDesc">Green square indicates letter is in the word and in the correct spot</div>
+            <div class="colorImgTile"><img class="helpImg" src="imgs/help/partialMatch.png" alt="Exact Match"></div>
+            <div class="colorDesc">Yellow square indicates letter is in the word but in the wrong spot</div>
+            <div class="colorImgTile"><img class="helpImg" src="imgs/help/noMatch.png" alt="Exact Match"></div>
+            <div class="colorDesc">Grey square indicates letter is not in the word at all</div>
+        </div>
+        <!-- <button id="close-help">Close</button> -->
+    </div>
 </body>
 </html>

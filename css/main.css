@@ -1,5 +1,5 @@
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Calibri, Helvetica, sans-serif;
     box-sizing: border-box;
     transition-property: all;
     transition-timing-function: ease;
@@ -140,4 +140,39 @@ main {
     outline-color: rgba(89, 89, 89, 0);
     outline-offset: 15px;
     letter-spacing: 5px;
+}
+
+
+#popup-help-window {
+    position: fixed;
+    width: 350px;
+    height: 400px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 5%;
+    padding: 10px;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+    cursor: pointer;
+}
+
+#close-help {
+    text-align: right;
+}
+
+#colorHelp {
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 50px auto;
+    padding: 10px;
+    gap: 10px 3px;
+}
+
+.helpImg {
+    height: 25px;
 }

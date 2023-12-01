@@ -92,6 +92,11 @@ const buttonEl = document.getElementsByClassName('button')[0];
 // grab keyboard elements and save them to an array
 const keysEls = [...document.querySelectorAll(".row > div")];
 
+// help popup
+const helpPopupLinkEl = document.getElementById('popup-help-link');
+const helpPopupWindowEl = document.getElementById('popup-help-window');
+const helpCloseEl = document.getElementById('close-help');
+
 // ===================================================== 
 //                 FUNCTIONS
 // ===================================================== 
@@ -519,3 +524,10 @@ document.getElementById('keyboard').addEventListener('click', handleScreenKeyCli
 buttonEl.addEventListener('click', handleButtonClick);
 
 document.addEventListener('keyup', handleKeyUp);
+
+helpPopupLinkEl.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    helpPopupWindowEl.style.display = 'block';
+});
+
+helpCloseEl.addEventListener('click', () => helpPopupWindowEl.style.display = 'none');
