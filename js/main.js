@@ -83,7 +83,9 @@ let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 //   - Guess square divs
 // ===================================================== 
 const messageEl = document.querySelector('h2');
-const buttonEl = document.querySelector('button');
+const buttonEl = document.getElementsByClassName('button')[0];
+console.log('buttonEl: \n', buttonEl);
+// const buttonEl = document.querySelector('button');
 
 // grab keyboard elements and save them to an array
 const keysEls = [...document.querySelectorAll(".row > div")];
