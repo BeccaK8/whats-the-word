@@ -42,12 +42,22 @@ class Player {
         this.lossCount = 0;
         this.winStreak = 0;
         this.maxWinStreak = 0;
+        this.winGuessDistribution = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0
+        };
     };
 
-    recordWin() {
+    recordWin(guessNum) {
         this.winCount++;
         this.winStreak++;
         if (this.maxWinStreak < this.winStreak) this.maxWinStreak = this.winStreak;
+        this.winGuessDistribution[guessNum]++;
+        console.log('player.recordwin - winGuessDistribution = \n', this.winGuessDistribution);
     }
 
     recordLoss() {
@@ -489,7 +499,7 @@ function handleGuess() {
     if (gameStatus === WIN) {
         // they guessed the right word!
         numGuesses++;  // to get it to actual number of guesses (1-based)
-        player.recordWin();
+        player.recordWin(numGuesses);
     } else {
         // Increment number of guesses and reset guessComplete
         numGuesses++;
