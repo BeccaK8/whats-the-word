@@ -41,16 +41,34 @@ class Player {
         this.winCount = 0;
         this.lossCount = 0;
         this.winStreak = 0;
+        this.maxWinStreak = 0;
     };
 
     recordWin() {
         this.winCount++;
         this.winStreak++;
+        if (this.maxWinStreak < this.winStreak) this.maxWinStreak = this.winStreak;
     }
 
     recordLoss() {
         this.lossCount++;
         this.winStreak = 0;
+    }
+
+    getGamesPlayed() {
+        return this.winCount + this.lossCount;
+    }
+
+    getWinPct() {
+        return this.getGamesPlayed() > 0 ? (this.winCount / this.getGamesPlayed()) * 100 : 0;
+    }
+
+    getWinStreak() {
+        return this.winStreak;
+    }
+
+    getMaxStreak() {
+        return this.maxWinStreak;
     }
 }
 
@@ -96,6 +114,11 @@ const keysEls = [...document.querySelectorAll(".row > div")];
 const helpPopupLinkEl = document.getElementById('popup-help-link');
 const helpPopupWindowEl = document.getElementById('popup-help-window');
 const helpCloseEl = document.getElementById('close-help');
+
+// stats popup
+const statsPopupLinkEl = document.getElementById('popup-stats-link');
+const statsPopupWindowEl = document.getElementById('popup-stats-window');
+const statsCloseEl = document.getElementById('close-stats');
 
 // ===================================================== 
 //                 FUNCTIONS
@@ -525,9 +548,23 @@ buttonEl.addEventListener('click', handleButtonClick);
 
 document.addEventListener('keyup', handleKeyUp);
 
+// help
 helpPopupLinkEl.addEventListener('click', (evt) => {
     evt.preventDefault();
     helpPopupWindowEl.style.display = 'block';
 });
-
 helpCloseEl.addEventListener('click', () => helpPopupWindowEl.style.display = 'none');
+
+// stats
+statsPopupLinkEl.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    // set the stats
+    document.getElementById('played').innerText = player.getGamesPlayed();
+    document.getElementById('winPct').innerText = player.getWinPct();
+    document.getElementById('currentStreak').innerText = player.getWinStreak();
+    document.getElementById('maxStreak').innerText = player.getMaxStreak();
+
+    // show the window
+    statsPopupWindowEl.style.display = 'block';
+});
+statsCloseEl.addEventListener('click', () => statsPopupWindowEl.style.display = 'none');

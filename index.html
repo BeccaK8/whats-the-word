@@ -11,7 +11,7 @@
     <header class="flex-ctr">
         <!-- help/stats nav -->
         <div id="nav">
-            <img src="imgs/stats.png" alt="Statistics" class="navIcon">
+            <a href="#" id="popup-stats-link"><img src="imgs/stats.png" alt="Statistics" class="navIcon"></a>
             <a href="#" id="popup-help-link"><img src="imgs/help.png" alt="Help" class="navIcon"></a>
         </div>
         <img src="imgs/gameLogo.png" alt="What's the Word?!">
@@ -118,7 +118,22 @@
             <div class="colorImgTile"><img class="helpImg" src="imgs/help/noMatch.png" alt="Exact Match"></div>
             <div class="colorDesc">Grey square indicates letter is not in the word at all</div>
         </div>
-        <!-- <button id="close-help">Close</button> -->
+    </div>
+
+    <div id="popup-stats-window">
+        <div id="close-stats">X</div>
+        <h3>Statistics</h3>
+        
+        <div id="stats">
+            <div class="stat" id="played"></div>
+            <div class="stat" id="winPct"></div>
+            <div class="stat" id="currentStreak"></div>
+            <div class="stat" id="maxStreak"></div>
+            <div class="statTitle">Played</div>
+            <div class="statTitle">Win %</div>
+            <div class="statTitle">Current Streak</div>
+            <div class="statTitle">Max Streak</div>
+        </div>
     </div>
 </body>
 </html>
