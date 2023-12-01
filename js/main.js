@@ -11,7 +11,8 @@
 //   - Maximum number of guesses
 // ===================================================== 
 // TODO: add test case for repeat letters - skunk
-const SECRET_WORD_LIST = ['STARE', 'QUOTA', 'JUMPY', 'SKIMP'];
+const SECRET_WORD_LIST = ['SKANT', 'STANK', 'SUSIS'];
+//const SECRET_WORD_LIST = ['STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
 
 const LETTER_STATE_LOOKUP = {
     'e': {desc: 'Exact Match', bgColor: 'rgb(10 123 55)', color: 'white'},
@@ -353,7 +354,7 @@ function updateLettersUsed(letter, state) {
     // console.log('updateLettersUsed: lettersUsed[letter] AFTER = \n', lettersUsed[letter]);
     // console.log('updateLettersUsed: lettersUsed AFTER = \n', lettersUsed);
 }
-
+// TODO maybe delete checkSquare when new logic works
 // Compare square letter to secret word and update square state and letters used appropriately
 function checkSquare(squ, squIdx) {
     
@@ -382,8 +383,109 @@ function canHandleGuess() {
     return !isGameOver() && guessComplete;
 }
 
+// Get state of given letter relative to secretWord at the given index
+function getLetterState(letter, idx) {
+    console.log(`getletterstate for letter ${letter} and idx ${idx}`);
+    return (secretWord.includes(letter)) ? ((secretWord.charAt(idx) === letter) ? 'e' : 'p') : 'n';
+}
+
+// Compare guess (argument is an array of square objects) to secret word and update square state and letters used appropriately
+function checkGuess(guess) {
+
+    console.log('checkGuess - guess argument: \n', guess);
+    
+    // build guessWord from guess array of square objects
+    // and an array of letters in 
+    let guessWord = '';
+    let guessLetters = {};
+    for (let idx in guess) {
+        const letter = guess[idx].letter;
+        guessWord = guessWord + letter;
+        if (!guessLetters[letter]) guessLetters[letter] = [];
+        guessLetters[letter].push(idx);
+    };
+    console.log('checkGuess - guessLetters: \n', guessLetters);
+    console.log('handleGuess - guessWord: \n', guessWord);
+
+    // check to see if match
+    if (guessWord === secretWord) {
+        //update guess states and game status
+        for (let idx in guess) {
+            guess[idx].state = 'e';
+        }
+        gameStatus = 'W';
+    } else {
+        // guess is not the secret word
+        // for each unique letter in guess
+        for (let letter in guessLetters) {
+            console.log('guessLetters[letter].length: \n', guessLetters[letter].length);
+            // if the letter only exists once in guess, then process normally
+            if (guessLetters[letter].length === 1) {
+                let idx = guessLetters[letter][0];
+                guess[idx].state = getLetterState(letter, idx);
+            } else {
+                // handle repeats
+                // check for duplicates
+                // is letter repeated in guess? in secret?
+                const secretRptIndexes = [];
+                for (let i = 0; i < secretWord.length; i++) {
+                    if (secretWord[i] === letter) {
+                        secretRptIndexes.push(i);
+                    }
+                }
+                if (secretRptIndexes.length >= guessLetters[letter].length) {
+                    // can still process normally
+                    guessLetters[letter].forEach((idx) => guess[idx].state = getLetterState(letter, idx));
+                } else {
+                    // need to handle where more in guess than secret
+                }
+            }
+        }
+    }
+    
+    // TODO handle duplicate letters
+
+    for (let idx in guess) {
+        updateLettersUsed(guess[idx].letter, guess[idx].state);
+    }
+}
+
+
 // Handle Click of "GUESS" button:
 function handleGuess() {
+    console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
+    console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
+    console.log('handleGuess - for in - reminder of secret word: \n', secretWord);
+
+    // if we cannot process the guess for some return then just return
+    if (!canHandleGuess()) return;
+
+    checkGuess(guesses[numGuesses]);
+
+    //   - Check for win - does guess equal mystery word
+    if (gameStatus === 'W') {
+        // they guessed the right word!
+        numGuesses++;  // to get it to actual number of guesses (1-based)
+        player.recordWin();
+    } else {
+        // Increment number of guesses and reset guessComplete
+        numGuesses++;
+        guessComplete = false;
+
+        // have they run out of guesses and lost
+        if (numGuesses === MAX_GUESSES) {
+            gameStatus = 'L'; 
+            player.recordLoss();
+        }
+    }
+
+    // update board
+    render();
+}
+
+
+// TODO REMOVE handleGuessOLD once we get new one working - may also be able to delete checkSquare()
+function handleGuessOLD() {
     // console.log('handleGuess - numGuesses (aka current guess): \n', numGuesses);
     // console.log('handleGuess - guesses[numGuesses]: \n', guesses[numGuesses]);
 
