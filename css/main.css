@@ -190,23 +190,10 @@ main {
     height: 200px;
     width: 300px;
     /* border: 1px solid black; */
-    /* display: table-cell; */
     vertical-align: bottom;
     font-size: 12px;
     margin-top: 20px;
 }
-
-/* .bar-container {
-    display: flex;
-    flex-direction: rtl;
-    padding: 5px;
-    align-items: flex-end;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    float: right;
-    margin: 0px;
-} */
 
 .bar {
     position: absolute;
@@ -214,40 +201,24 @@ main {
     display: inline-block;
     height: 20px;
     margin: 2px;
-    background-color: purple;
+    background-color: rgb(89 89 89);
     color: white;
     font-weight: bold;
     text-align: center;
     left: 15px;
 }
 
-#distLabels {
-    border: 1px solid black;
-    vertical-align: bottom;
-    margin-top: 20px;
-    height: 200px;
-    position: relative;
-}
-
 .label {
-    color: red;
+    color: black;
     position: relative;
     width: 100%;
-    bottom: 0px;
+    bottom: 23px;
     left: -15px;
     margin-left: 2px;
     margin-right: 2px;
     text-align: justify;
 }
-/* 
-.y-axis {
-    transform: rotateZ(-90deg);
-    position: absolute;
-    bottom: 50%;
-    left: -23px;
-}
 
-.y-axis-container {
-    width: 20px;
-    height: 100%;
-} */
+.dist-title {
+    font-size: 16px;
+} 

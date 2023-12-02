@@ -44,11 +44,11 @@ class Player {
         this.maxWinStreak = 0;
         this.winGuessDistribution = {
             1: 0,
-            2: 1,
-            3: 2,
-            4: 3,
+            2: 0,
+            3: 0,
+            4: 0,
             5: 0,
-            6: 2
+            6: 0
         };
     };
 
@@ -541,17 +541,14 @@ function handleButtonClick(evt) {
 }
 
 function handleDistributionStats() {
-    const chart = document.getElementById('distribution');
+    const chartEl = document.getElementById('distribution');
     const guessDist = player.getWinGuessDistribution();
-    console.log(guessDist);
+    // console.log(guessDist);
 
-    const yAxis = document.createElement('div');
-    const yAxisContainer = document.createElement('div');
-    yAxis.classList.add('y-axis');
-    yAxisContainer.classList.add('y-axis-container');
-    yAxis.innerText = 'Wins by Number of Guesses';
-    yAxisContainer.appendChild(yAxis);
-    chart.appendChild(yAxisContainer);
+    const distTitleEl = document.createElement('div');
+    distTitleEl.classList.add('dist-title');
+    distTitleEl.innerText = 'Wins by Number of Guesses';
+    chartEl.appendChild(distTitleEl);
 
     let min = 0;
     let max = 0;
@@ -566,44 +563,19 @@ function handleDistributionStats() {
     barContainer.classList.add('bar-container');
     for (let idx in guessDist) {
         const barWidth = Math.round(100 * ((guessDist[idx] - min) / max));
-        const bar = document.createElement('DIV');
-        bar.classList.add('bar');
-        bar.style.width = `${barWidth}%`;  // should be width for horizontal
-        bar.style.top = `${25 * idx}px`;  // should be top for horizontal
-        bar.innerHTML = guessDist[idx];
-        barContainer.append(bar);
+        const barEl = document.createElement('DIV');
+        barEl.classList.add('bar');
+        barEl.style.width = `${barWidth}%`;  // should be width for horizontal
+        barEl.style.top = `${25 * idx}px`;  // should be top for horizontal
+        barEl.innerHTML = `<scan class='bar-value'>${guessDist[idx]}</span>`;
+        barContainer.append(barEl);
 
-        const barDesc = document.createElement('p');
-        barDesc.classList.add('label');
-        barDesc.innerText = idx;
-        bar.appendChild(barDesc);
+        const barDescEl = document.createElement('p');
+        barDescEl.classList.add('label');
+        barDescEl.innerText = idx;
+        barEl.appendChild(barDescEl);
     };    
-    chart.appendChild(barContainer);
-    // const labels = document.getElementById('distLabels');
-
-    // let min = 0;
-    // let max = 0;
-
-    // // determine the min and max for the chart
-    // for (let idx in guessDist) {
-    //     if (max < guessDist[idx]) max = guessDist[idx];
-    //     if (min > guessDist[idx]) min = guessDist[idx];
-    // };
-    // for (let idx in guessDist) {
-    //     const barHeight = Math.round(100 * ((guessDist[idx] - min) / max));
-    //     const div = document.createElement('DIV');
-    //     div.classList.add('bar');
-    //     div.style.width = `${barHeight}%`;
-    //     div.style.top = `${25 * idx}px`;
-    //     div.innerHTML = guessDist[idx];
-    //     chart.append(div);
-
-    //     const labelDiv = document.createElement('DIV');
-    //     labelDiv.classList.add('label');
-    //     labelDiv.style.top = `${25 * idx}px`;
-    //     labelDiv.innerText = idx;
-    //     labels.append(labelDiv);
-    // };
+    chartEl.appendChild(barContainer);
 }
 
 function handleCloseStats() {
@@ -612,23 +584,13 @@ function handleCloseStats() {
 
     // delete chart divs
     const chart = document.getElementById('distribution');
-    console.log('chart before removing div: \n', chart.childNodes);
+    // console.log('chart before removing div: \n', chart.childNodes);
     let child = chart.lastElementChild;
     while (child) {
         chart.removeChild(child);
         child = chart.lastElementChild;
     }
-    console.log('chart before removing div: \n', chart);
-
-    // delete chart label divs
-    const labels = document.getElementById('distLabels');
-    console.log('labels before removing div: \n', labels.childNodes);
-    child = labels.lastElementChild;
-    while (child) {
-        labels.removeChild(child);
-        child = labels.lastElementChild;
-    }
-    console.log('labels before removing div: \n', labels);
+    // console.log('chart before removing div: \n', chart);
 }
 
 // ===================================================== 
@@ -651,6 +613,10 @@ helpCloseEl.addEventListener('click', () => helpPopupWindowEl.style.display = 'n
 // stats
 statsPopupLinkEl.addEventListener('click', (evt) => {
     evt.preventDefault();
+
+    // is it already open?
+    if (statsPopupWindowEl.style.display === 'block') return;
+
     // set the stats
     document.getElementById('played').innerText = player.getGamesPlayed();
     document.getElementById('winPct').innerText = player.getWinPct();
