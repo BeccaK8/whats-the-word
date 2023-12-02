@@ -185,24 +185,28 @@ main {
     gap: 10px;
 }
 
-#advstats {
-    /* background-color: lightyellow; */
-    position: relative;
-    height: 200px;
-    display: grid;
-    grid-template-columns: 15px auto;
-}
-
 #distribution {
     position: relative;
-    height: 100px;
-    /* width: 200px; */
+    height: 200px;
+    width: 300px;
     /* border: 1px solid black; */
     /* display: table-cell; */
     vertical-align: bottom;
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 20px;
 }
+
+/* .bar-container {
+    display: flex;
+    flex-direction: rtl;
+    padding: 5px;
+    align-items: flex-end;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    float: right;
+    margin: 0px;
+} */
 
 .bar {
     position: absolute;
@@ -212,13 +216,38 @@ main {
     margin: 2px;
     background-color: purple;
     color: white;
+    font-weight: bold;
     text-align: center;
+    left: 15px;
 }
 
 #distLabels {
+    border: 1px solid black;
     vertical-align: bottom;
+    margin-top: 20px;
+    height: 200px;
+    position: relative;
 }
 
 .label {
     color: red;
+    position: relative;
+    width: 100%;
+    bottom: 0px;
+    left: -15px;
+    margin-left: 2px;
+    margin-right: 2px;
+    text-align: justify;
 }
+/* 
+.y-axis {
+    transform: rotateZ(-90deg);
+    position: absolute;
+    bottom: 50%;
+    left: -23px;
+}
+
+.y-axis-container {
+    width: 20px;
+    height: 100%;
+} */
