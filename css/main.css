@@ -184,3 +184,41 @@ main {
     text-align: center;
     gap: 10px;
 }
+
+#distribution {
+    position: relative;
+    height: 200px;
+    width: 300px;
+    /* border: 1px solid black; */
+    vertical-align: bottom;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.bar {
+    position: absolute;
+    bottom: 0;
+    display: inline-block;
+    height: 20px;
+    margin: 2px;
+    background-color: rgb(89 89 89);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    left: 15px;
+}
+
+.label {
+    color: black;
+    position: relative;
+    width: 100%;
+    bottom: 23px;
+    left: -15px;
+    margin-left: 2px;
+    margin-right: 2px;
+    text-align: justify;
+}
+
+.dist-title {
+    font-size: 16px;
+} 

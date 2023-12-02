@@ -80,6 +80,10 @@ class Player {
     getMaxStreak() {
         return this.maxWinStreak;
     }
+
+    getWinGuessDistribution() {
+        return this.winGuessDistribution;
+    }
 }
 
 // ===================================================== 
@@ -536,17 +540,58 @@ function handleButtonClick(evt) {
     handleButtonAction(evt.target.id);
 }
 
-// ===================================================== 
-// Handle Click of "Stats" button:
-//   - Display Number of Games Played
-//   - Display Win %
-//   - Display Current Streak
-// ===================================================== 
+function handleDistributionStats() {
+    const chartEl = document.getElementById('distribution');
+    const guessDist = player.getWinGuessDistribution();
+    // console.log(guessDist);
 
-// ===================================================== 
-// Handle Click of "Help" button:
-//   - Overlay the instructions on screen
-// ===================================================== 
+    const distTitleEl = document.createElement('div');
+    distTitleEl.classList.add('dist-title');
+    distTitleEl.innerText = 'Wins by Number of Guesses';
+    chartEl.appendChild(distTitleEl);
+
+    let min = 0;
+    let max = 0;
+
+    // determine the min and max for the chart
+    for (let idx in guessDist) {
+        if (max < guessDist[idx]) max = guessDist[idx];
+        if (min > guessDist[idx]) min = guessDist[idx];
+    };
+
+    const barContainer = document.createElement('div');
+    barContainer.classList.add('bar-container');
+    for (let idx in guessDist) {
+        const barWidth = Math.round(100 * ((guessDist[idx] - min) / max));
+        const barEl = document.createElement('DIV');
+        barEl.classList.add('bar');
+        barEl.style.width = `${barWidth}%`;  // should be width for horizontal
+        barEl.style.top = `${25 * idx}px`;  // should be top for horizontal
+        barEl.innerHTML = `<scan class='bar-value'>${guessDist[idx]}</span>`;
+        barContainer.append(barEl);
+
+        const barDescEl = document.createElement('p');
+        barDescEl.classList.add('label');
+        barDescEl.innerText = idx;
+        barEl.appendChild(barDescEl);
+    };    
+    chartEl.appendChild(barContainer);
+}
+
+function handleCloseStats() {
+    // close window
+    statsPopupWindowEl.style.display = 'none'
+
+    // delete chart divs
+    const chart = document.getElementById('distribution');
+    // console.log('chart before removing div: \n', chart.childNodes);
+    let child = chart.lastElementChild;
+    while (child) {
+        chart.removeChild(child);
+        child = chart.lastElementChild;
+    }
+    // console.log('chart before removing div: \n', chart);
+}
 
 // ===================================================== 
 //                 EVENT LISTENERS
@@ -568,13 +613,19 @@ helpCloseEl.addEventListener('click', () => helpPopupWindowEl.style.display = 'n
 // stats
 statsPopupLinkEl.addEventListener('click', (evt) => {
     evt.preventDefault();
+
+    // is it already open?
+    if (statsPopupWindowEl.style.display === 'block') return;
+
     // set the stats
     document.getElementById('played').innerText = player.getGamesPlayed();
     document.getElementById('winPct').innerText = player.getWinPct();
     document.getElementById('currentStreak').innerText = player.getWinStreak();
     document.getElementById('maxStreak').innerText = player.getMaxStreak();
 
+    handleDistributionStats();
+
     // show the window
     statsPopupWindowEl.style.display = 'block';
 });
-statsCloseEl.addEventListener('click', () => statsPopupWindowEl.style.display = 'none');
+statsCloseEl.addEventListener('click', handleCloseStats);
