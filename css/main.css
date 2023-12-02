@@ -184,3 +184,41 @@ main {
     text-align: center;
     gap: 10px;
 }
+
+#advstats {
+    /* background-color: lightyellow; */
+    position: relative;
+    height: 200px;
+    display: grid;
+    grid-template-columns: 15px auto;
+}
+
+#distribution {
+    position: relative;
+    height: 100px;
+    /* width: 200px; */
+    /* border: 1px solid black; */
+    /* display: table-cell; */
+    vertical-align: bottom;
+    font-size: 10px;
+    margin-top: 20px;
+}
+
+.bar {
+    position: absolute;
+    bottom: 0;
+    display: inline-block;
+    height: 20px;
+    margin: 2px;
+    background-color: purple;
+    color: white;
+    text-align: center;
+}
+
+#distLabels {
+    vertical-align: bottom;
+}
+
+.label {
+    color: red;
+}

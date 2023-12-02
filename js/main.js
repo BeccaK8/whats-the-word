@@ -44,11 +44,11 @@ class Player {
         this.maxWinStreak = 0;
         this.winGuessDistribution = {
             1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
+            2: 1,
+            3: 2,
+            4: 3,
             5: 0,
-            6: 0
+            6: 2
         };
     };
 
@@ -79,6 +79,10 @@ class Player {
 
     getMaxStreak() {
         return this.maxWinStreak;
+    }
+
+    getWinGuessDistribution() {
+        return this.winGuessDistribution;
     }
 }
 
@@ -536,17 +540,51 @@ function handleButtonClick(evt) {
     handleButtonAction(evt.target.id);
 }
 
-// ===================================================== 
-// Handle Click of "Stats" button:
-//   - Display Number of Games Played
-//   - Display Win %
-//   - Display Current Streak
-// ===================================================== 
+function handleDistributionStats() {
+    const chart = document.getElementById('distribution');
+    const labels = document.getElementById('distLabels');
+    const guessDist = player.getWinGuessDistribution();
+    console.log(guessDist);
 
-// ===================================================== 
-// Handle Click of "Help" button:
-//   - Overlay the instructions on screen
-// ===================================================== 
+    let min = 0;
+    let max = 0;
+
+    // determine the min and max for the chart
+    for (let idx in guessDist) {
+        if (max < guessDist[idx]) max = guessDist[idx];
+        if (min > guessDist[idx]) min = guessDist[idx];
+    };
+    for (let idx in guessDist) {
+        const barHeight = Math.round(100 * ((guessDist[idx] - min) / max));
+        const div = document.createElement('DIV');
+        div.classList.add('bar');
+        div.style.width = `${barHeight}%`;
+        div.style.top = `${25 * idx}px`;
+        div.innerHTML = guessDist[idx];
+        chart.append(div);
+
+        // const labelDiv = document.createElement('DIV');
+        // labelDiv.classList.add('label');
+        // labelDiv.style.top = `${25 * idx}px`;
+        // labelDiv.innerText = idx;
+        // labels.append(labelDiv);
+    };
+}
+
+function handleCloseStats() {
+    // close window
+    statsPopupWindowEl.style.display = 'none'
+
+    // delete chart divs
+    const chart = document.getElementById('distribution');
+    console.log('chart before removing div: \n', chart.childNodes);
+    let child = chart.lastElementChild;
+    while (child) {
+        chart.removeChild(child);
+        child = chart.lastElementChild;
+    }
+    console.log('chart before removing div: \n', chart);
+}
 
 // ===================================================== 
 //                 EVENT LISTENERS
@@ -574,7 +612,9 @@ statsPopupLinkEl.addEventListener('click', (evt) => {
     document.getElementById('currentStreak').innerText = player.getWinStreak();
     document.getElementById('maxStreak').innerText = player.getMaxStreak();
 
+    handleDistributionStats();
+
     // show the window
     statsPopupWindowEl.style.display = 'block';
 });
-statsCloseEl.addEventListener('click', () => statsPopupWindowEl.style.display = 'none');
+statsCloseEl.addEventListener('click', handleCloseStats);
