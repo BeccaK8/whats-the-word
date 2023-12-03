@@ -10,7 +10,8 @@
 //       = Unknown ==> letter has not been tried yet (white)
 //   - Maximum number of guesses
 // ===================================================== 
-const SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS', 'STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
+const FILE_NAME = 'assets/words5.txt';
+const ALT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS', 'STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
 
 const EXACT_MATCH = 'e';
 const PARTIAL_MATCH = 'p';
@@ -51,7 +52,7 @@ class Player {
             6: 0
         };
     };
-
+    
     recordWin(guessNum) {
         this.winCount++;
         this.winStreak++;
@@ -59,24 +60,24 @@ class Player {
         this.winGuessDistribution[guessNum]++;
         console.log('player.recordwin - winGuessDistribution = \n', this.winGuessDistribution);
     }
-
+    
     recordLoss() {
         this.lossCount++;
         this.winStreak = 0;
     }
-
+    
     getGamesPlayed() {
         return this.winCount + this.lossCount;
     }
-
+    
     getWinPct() {
         return this.getGamesPlayed() > 0 ? (this.winCount / this.getGamesPlayed()) * 100 : 0;
     }
-
+    
     getWinStreak() {
         return this.winStreak;
     }
-
+    
     getMaxStreak() {
         return this.maxWinStreak;
     }
@@ -92,6 +93,7 @@ class Player {
 //   - Letters array - store current state of each letter
 //   -
 // ===================================================== 
+let SECRET_WORD_LIST;
 
 let player;   // instance of Player to hold the statistics for the current user
 
@@ -140,26 +142,51 @@ function init() {
     console.log('\ninit: player \n', player);
     if (!player) player = new Player();
     console.log('\ninit: player \n', player);
-
+    
     numGuesses = 0;
-
+    
     // pick secret word
     secretWord = getSecretWord();
-
+    
     // reset guesses array
     // console.log('init: guesses before reset():\n', guesses);
     resetGuesses();
     // console.log('init: guesses after reset():\n', guesses);
-
+    
     // reset letters used and game status
     lettersUsed = [];
     gameStatus = null;
     guessComplete = false;
-
+    
     render();
 }
 
 init();
+
+function loadFile(cb) {
+    const objXMLhttp = new XMLHttpRequest();
+    objXMLhttp.open('GET', FILE_NAME, true);
+    objXMLhttp.send();
+    objXMLhttp.onreadystatechange = function () {
+        if (objXMLhttp.readyState === 4 && objXMLhttp.status === 200) {
+            console.log('objXMLhttp.responseText = \n', objXMLhttp.responseText);
+            SECRET_WORD_LIST = objXMLhttp.responseText.split('\n');
+        }
+        console.log('SECRET_WORD_LIST after = \n', SECRET_WORD_LIST);
+        // cb();
+    };
+}
+
+function cleanSecretWordList() {
+    console.log('need o clean the word list - remove blanks, convert all to upper');
+}
+
+// load secret word list if it hasn't already been done
+function loadSecretWordList(){
+    console.log('SECRET_WORD_LIST before = \n', SECRET_WORD_LIST);
+    if (SECRET_WORD_LIST) return;
+    loadFile(cleanSecretWordList);
+}
 
 // is game over?
 function isGameOver() {
@@ -168,6 +195,8 @@ function isGameOver() {
 
 // Get Secret Word - Select a random word from the master array and return it
 function getSecretWord() {
+    
+    loadSecretWordList();
     const wordIdx = Math.floor(Math.random() * SECRET_WORD_LIST.length);
     console.log('\n getSecretWord() - secretWord: \n', SECRET_WORD_LIST[wordIdx]);
 
