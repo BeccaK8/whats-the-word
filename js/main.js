@@ -93,10 +93,10 @@ class Player {
 //   - Letters array - store current state of each letter
 //   -
 // ===================================================== 
-let SECRET_WORD_LIST;
 
 let player;   // instance of Player to hold the statistics for the current user
 
+let secretWordList;  // array of secret word list imported from file
 let secretWord;   // secret word
 
 let guesses;  // an array of 6 nested arrays containing objects
@@ -170,23 +170,23 @@ function loadFile() {
     objXMLhttp.onreadystatechange = function () {
         if (objXMLhttp.readyState === 4 && objXMLhttp.status === 200) {
             console.log('objXMLhttp.responseText = \n', objXMLhttp.responseText);
-            SECRET_WORD_LIST = objXMLhttp.responseText.split('\n');
+            secretWordList = objXMLhttp.responseText.split('\n');
         }
-        console.log('SECRET_WORD_LIST after = \n', SECRET_WORD_LIST);
+        console.log('SECRET_WORD_LIST after = \n', secretWordList);
 
     };
 }
 
 function cleanSecretWordList(cb) {
-    if (SECRET_WORD_LIST) {
+    if (secretWordList) {
         console.log('need o clean the word list - remove blanks, convert all to upper');
-        SECRET_WORD_LIST = SECRET_WORD_LIST.filter((word) => word.length > 0);
-        console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
-        SECRET_WORD_LIST = SECRET_WORD_LIST.map((word) => { return word.toUpperCase()});
-        console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
+        secretWordList = secretWordList.filter((word) => word.length > 0);
+        console.log('SECRET_WORD_LIST in clean = \n', secretWordList);
+        secretWordList = secretWordList.map((word) => { return word.toUpperCase()});
+        console.log('SECRET_WORD_LIST in clean = \n', secretWordList);
     } else {
         console.log('cleanSWL - no wordlist loaded so use default!');
-        SECRET_WORD_LIST = DEFAULT_SECRET_WORD_LIST;
+        secretWordList = DEFAULT_SECRET_WORD_LIST;
     }
 
     setTimeout(function() {
@@ -197,7 +197,7 @@ function cleanSecretWordList(cb) {
 // load secret word list if it hasn't already been done
 function loadSecretWordList(cb){
     console.log('loadSecretWordList: should only happen for the first game!!!');
-    console.log('SECRET_WORD_LIST before = \n', SECRET_WORD_LIST);
+    console.log('SECRET_WORD_LIST before = \n', secretWordList);
     loadFile();
 
     setTimeout(function() {
@@ -207,10 +207,10 @@ function loadSecretWordList(cb){
 
 
 function pickSecretWord() {
-    const wordIdx = Math.floor(Math.random() * SECRET_WORD_LIST.length);
-    console.log('\n getSecretWord() - secretWord: \n', SECRET_WORD_LIST[wordIdx]);
+    const wordIdx = Math.floor(Math.random() * secretWordList.length);
+    console.log('\n getSecretWord() - secretWord: \n', secretWordList[wordIdx]);
     
-    secretWord = SECRET_WORD_LIST[wordIdx];
+    secretWord = secretWordList[wordIdx];
     
 }
 
@@ -221,7 +221,7 @@ function onLoadSuccess() {
 
 // Get Secret Word - Select a random word from the master array and return it
 function getSecretWord() {    
-    return (SECRET_WORD_LIST) ? pickSecretWord() : loadSecretWordList(onLoadSuccess);
+    return (secretWordList) ? pickSecretWord() : loadSecretWordList(onLoadSuccess);
 }
 
 // is game over?
