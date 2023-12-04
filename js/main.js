@@ -11,7 +11,7 @@
 //   - Maximum number of guesses
 // ===================================================== 
 const FILE_NAME = 'assets/words5.txt';
-const ALT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE'];
+const DEFAULT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE'];
 
 const EXACT_MATCH = 'e';
 const PARTIAL_MATCH = 'p';
@@ -178,11 +178,16 @@ function loadFile() {
 }
 
 function cleanSecretWordList(cb) {
-    console.log('need o clean the word list - remove blanks, convert all to upper');
-    SECRET_WORD_LIST = SECRET_WORD_LIST.filter((word) => word.length > 0);
-    console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
-    SECRET_WORD_LIST = SECRET_WORD_LIST.map((word) => { return word.toUpperCase()});
-    console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
+    if (SECRET_WORD_LIST) {
+        console.log('need o clean the word list - remove blanks, convert all to upper');
+        SECRET_WORD_LIST = SECRET_WORD_LIST.filter((word) => word.length > 0);
+        console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
+        SECRET_WORD_LIST = SECRET_WORD_LIST.map((word) => { return word.toUpperCase()});
+        console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
+    } else {
+        console.log('cleanSWL - no wordlist loaded so use default!');
+        SECRET_WORD_LIST = DEFAULT_SECRET_WORD_LIST;
+    }
 
     setTimeout(function() {
         cb();
