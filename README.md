@@ -15,6 +15,7 @@ As a user, I want to...
   - be informed of correct answer when I run out of guesses
   - track the percentage of games I have won
   - track how many games I have won in a row (my current streak)
+  - track the distribution of guesses it has taken me to win games
   - have the ability to play again
 
 ## Wireframes
@@ -141,4 +142,5 @@ font-family: Arial, Helvetica, sans-serif;
 
 ## Next Steps
 As a user, I want to...
-  - track how many guesses it has taken me to win games
+  - play words of different lengths
+  - play more than one word at a time on different boards using same guesses
