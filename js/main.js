@@ -10,7 +10,8 @@
 //       = Unknown ==> letter has not been tried yet (white)
 //   - Maximum number of guesses
 // ===================================================== 
-const SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS', 'STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
+const FILE_NAME = 'assets/words5.txt';
+const DEFAULT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE'];
 
 const EXACT_MATCH = 'e';
 const PARTIAL_MATCH = 'p';
@@ -51,7 +52,7 @@ class Player {
             6: 0
         };
     };
-
+    
     recordWin(guessNum) {
         this.winCount++;
         this.winStreak++;
@@ -59,24 +60,24 @@ class Player {
         this.winGuessDistribution[guessNum]++;
         console.log('player.recordwin - winGuessDistribution = \n', this.winGuessDistribution);
     }
-
+    
     recordLoss() {
         this.lossCount++;
         this.winStreak = 0;
     }
-
+    
     getGamesPlayed() {
         return this.winCount + this.lossCount;
     }
-
+    
     getWinPct() {
         return this.getGamesPlayed() > 0 ? (this.winCount / this.getGamesPlayed()) * 100 : 0;
     }
-
+    
     getWinStreak() {
         return this.winStreak;
     }
-
+    
     getMaxStreak() {
         return this.maxWinStreak;
     }
@@ -99,6 +100,7 @@ class Player {
 
 let player;   // instance of Player to hold the statistics for the current user
 
+let secretWordList;  // array of secret word list imported from file
 let secretWord;   // secret word
 
 let guesses;  // an array of 6 nested arrays containing objects
@@ -144,38 +146,91 @@ function init() {
     console.log('\ninit: player \n', player);
     if (!player) player = new Player();
     console.log('\ninit: player \n', player);
-
+    
     numGuesses = 0;
-
+    
     // pick secret word
-    secretWord = getSecretWord();
+    getSecretWord();
 
     // reset guesses array
     // console.log('init: guesses before reset():\n', guesses);
     resetGuesses();
     // console.log('init: guesses after reset():\n', guesses);
-
+    
     // reset letters used and game status
     lettersUsed = [];
     gameStatus = null;
     guessComplete = false;
-
+    
     render();
 }
 
 init();
 
-// is game over?
-function isGameOver() {
-    return gameStatus === WIN || gameStatus === LOSS;
+function loadFile() {
+    const objXMLhttp = new XMLHttpRequest();
+    objXMLhttp.open('GET', FILE_NAME, true);
+    objXMLhttp.send();
+    objXMLhttp.onreadystatechange = function () {
+        if (objXMLhttp.readyState === 4 && objXMLhttp.status === 200) {
+            console.log('objXMLhttp.responseText = \n', objXMLhttp.responseText);
+            secretWordList = objXMLhttp.responseText.split('\n');
+        }
+        console.log('SECRET_WORD_LIST after = \n', secretWordList);
+
+    };
+}
+
+function cleanSecretWordList(cb) {
+    if (secretWordList) {
+        console.log('need o clean the word list - remove blanks, convert all to upper');
+        secretWordList = secretWordList.filter((word) => word.length > 0);
+        console.log('SECRET_WORD_LIST in clean = \n', secretWordList);
+        secretWordList = secretWordList.map((word) => { return word.toUpperCase()});
+        console.log('SECRET_WORD_LIST in clean = \n', secretWordList);
+    } else {
+        console.log('cleanSWL - no wordlist loaded so use default!');
+        secretWordList = DEFAULT_SECRET_WORD_LIST;
+    }
+
+    setTimeout(function() {
+        cb();
+    }, 500);
+}
+
+// load secret word list if it hasn't already been done
+function loadSecretWordList(cb){
+    console.log('loadSecretWordList: should only happen for the first game!!!');
+    console.log('SECRET_WORD_LIST before = \n', secretWordList);
+    loadFile();
+
+    setTimeout(function() {
+        cb();
+    }, 1000);
+}
+
+
+function pickSecretWord() {
+    const wordIdx = Math.floor(Math.random() * secretWordList.length);
+    console.log('\n getSecretWord() - secretWord: \n', secretWordList[wordIdx]);
+    
+    secretWord = secretWordList[wordIdx];
+    
+}
+
+// callback function to make sure clean and pick don't happen before load is complete
+function onLoadSuccess() {
+    cleanSecretWordList(pickSecretWord);
 }
 
 // Get Secret Word - Select a random word from the master array and return it
-function getSecretWord() {
-    const wordIdx = Math.floor(Math.random() * SECRET_WORD_LIST.length);
-    console.log('\n getSecretWord() - secretWord: \n', SECRET_WORD_LIST[wordIdx]);
+function getSecretWord() {    
+    return (secretWordList) ? pickSecretWord() : loadSecretWordList(onLoadSuccess);
+}
 
-    return SECRET_WORD_LIST[wordIdx];
+// is game over?
+function isGameOver() {
+    return gameStatus === WIN || gameStatus === LOSS;
 }
 
 // Reset Guesses Array - Reinitialize guesses to be a two-dimensional array
