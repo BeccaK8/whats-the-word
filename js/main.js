@@ -10,8 +10,14 @@
 //       = Unknown ==> letter has not been tried yet (white)
 //   - Maximum number of guesses
 // ===================================================== 
-const FILE_NAME = 'assets/words5.txt';
-const DEFAULT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE'];
+// const FILE_NAME = 'assets/words5.txt';
+// const DEFAULT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE'];
+
+const LENGTH_MODES = {
+    5: {wordLength: 5, maxGuesses: 6, fileName: 'assets/words5.txt', defaultSecretWordList: ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE']}
+};
+
+console.log('LENGTH_MODES: 5 = \n', LENGTH_MODES[5]);
 
 const EXACT_MATCH = 'e';
 const PARTIAL_MATCH = 'p';
@@ -25,8 +31,8 @@ const LETTER_STATE_LOOKUP = {
     [UNKNOWN]: {desc: 'Unknown', bgColor: 'white', color: 'black'}
 };
 
-const MAX_GUESSES = 6;
-const WORD_LENGTH = 5;
+// const MAX_GUESSES = 6;
+// const WORD_LENGTH = 5;
 
 const WIN = 'W';
 const LOSS = 'L';
@@ -99,8 +105,9 @@ class Player {
 // ===================================================== 
 
 let player;   // instance of Player to hold the statistics for the current user
+let lengthMode;  // word length for the current game
 
-let secretWordList;  // array of secret word list imported from file
+// let secretWordList;  // array of secret word list imported from file
 let secretWord;   // secret word
 
 let guesses;  // an array of 6 nested arrays containing objects
@@ -120,6 +127,7 @@ let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 //   - Guess square divs
 // ===================================================== 
 const messageEl = document.querySelector('h2');
+const guessesEl = document.getElementById('guesses');
 const buttonEl = document.getElementsByClassName('button')[0];
 // console.log('buttonEl: \n', buttonEl);
 
@@ -147,6 +155,7 @@ function init() {
     if (!player) player = new Player();
     console.log('\ninit: player \n', player);
     
+    lengthMode = 5;
     numGuesses = 0;
     
     // pick secret word
@@ -169,28 +178,28 @@ init();
 
 function loadFile() {
     const objXMLhttp = new XMLHttpRequest();
-    objXMLhttp.open('GET', FILE_NAME, true);
+    objXMLhttp.open('GET', LENGTH_MODES[lengthMode].fileName, true);
     objXMLhttp.send();
     objXMLhttp.onreadystatechange = function () {
         if (objXMLhttp.readyState === 4 && objXMLhttp.status === 200) {
-            console.log('objXMLhttp.responseText = \n', objXMLhttp.responseText);
-            secretWordList = objXMLhttp.responseText.split('\n');
+            // console.log('objXMLhttp.responseText = \n', objXMLhttp.responseText);
+            LENGTH_MODES[lengthMode].secretWordList = objXMLhttp.responseText.split('\n');
         }
-        console.log('SECRET_WORD_LIST after = \n', secretWordList);
+        console.log('SECRET_WORD_LIST after = \n', LENGTH_MODES[lengthMode].secretWordList);
 
     };
 }
 
 function cleanSecretWordList(cb) {
-    if (secretWordList) {
-        console.log('need o clean the word list - remove blanks, convert all to upper');
-        secretWordList = secretWordList.filter((word) => word.length > 0);
-        console.log('SECRET_WORD_LIST in clean = \n', secretWordList);
-        secretWordList = secretWordList.map((word) => { return word.toUpperCase()});
-        console.log('SECRET_WORD_LIST in clean = \n', secretWordList);
+    if (LENGTH_MODES[lengthMode].secretWordList) {
+        // console.log('need o clean the word list - remove blanks, convert all to upper');
+        LENGTH_MODES[lengthMode].secretWordList = LENGTH_MODES[lengthMode].secretWordList.filter((word) => word.length > 0);
+        // console.log('SECRET_WORD_LIST in clean = \n', secretWordList);
+        LENGTH_MODES[lengthMode].secretWordList = LENGTH_MODES[lengthMode].secretWordList.map((word) => { return word.toUpperCase()});
+        console.log('SECRET_WORD_LIST in clean = \n', LENGTH_MODES[lengthMode].secretWordList);
     } else {
         console.log('cleanSWL - no wordlist loaded so use default!');
-        secretWordList = DEFAULT_SECRET_WORD_LIST;
+        LENGTH_MODES[lengthMode].secretWordList = LENGTH_MODES[lengthMode].defaultSecretWordList;
     }
 
     setTimeout(function() {
@@ -201,7 +210,7 @@ function cleanSecretWordList(cb) {
 // load secret word list if it hasn't already been done
 function loadSecretWordList(cb){
     console.log('loadSecretWordList: should only happen for the first game!!!');
-    console.log('SECRET_WORD_LIST before = \n', secretWordList);
+    console.log('SECRET_WORD_LIST before = \n', LENGTH_MODES[lengthMode].secretWordList);
     loadFile();
 
     setTimeout(function() {
@@ -211,10 +220,10 @@ function loadSecretWordList(cb){
 
 
 function pickSecretWord() {
-    const wordIdx = Math.floor(Math.random() * secretWordList.length);
-    console.log('\n getSecretWord() - secretWord: \n', secretWordList[wordIdx]);
+    const wordIdx = Math.floor(Math.random() * LENGTH_MODES[lengthMode].secretWordList.length);
+    console.log('\n getSecretWord() - secretWord: \n', LENGTH_MODES[lengthMode].secretWordList[wordIdx]);
     
-    secretWord = secretWordList[wordIdx];
+    secretWord = LENGTH_MODES[lengthMode].secretWordList[wordIdx];
     
 }
 
@@ -225,7 +234,7 @@ function onLoadSuccess() {
 
 // Get Secret Word - Select a random word from the master array and return it
 function getSecretWord() {    
-    return (secretWordList) ? pickSecretWord() : loadSecretWordList(onLoadSuccess);
+    return (LENGTH_MODES[lengthMode].secretWordList) ? pickSecretWord() : loadSecretWordList(onLoadSuccess);
 }
 
 // is game over?
@@ -237,13 +246,13 @@ function isGameOver() {
 //  of objects - initially containing just a state of 0 (or unknown), with all letter k:v's deleted
 function resetGuesses() {
     // console.log('resetGuesses - guesses before: \n', guesses);
-    guesses = new Array(MAX_GUESSES);
-    for (let i = 0; i < MAX_GUESSES; i++) {
+    guesses = new Array(LENGTH_MODES[lengthMode].maxGuesses);
+    for (let i = 0; i < LENGTH_MODES[lengthMode].maxGuesses; i++) {
         // console.log(`resetGuesses - outer i loop - i=${i}`);
         // console.log('AND guesses[i] = \n', guesses[i]);
         guesses[i] = [];
         
-        for (let j = 0; j < WORD_LENGTH; j++) {
+        for (let j = 0; j < LENGTH_MODES[lengthMode].wordLength; j++) {
             // console.log(`BEFORE resetGuesses - inner j loop - i=${i} j=${j}`);
             // console.log('AND guesses[i] BEFORE = \n', guesses[i][j]);
             guesses[i][j] = { state: UNKNOWN };
@@ -269,18 +278,30 @@ function renderMessage() {
         messageEl.innerText = "Let's play...";
     } else {
         // message to guess again
-        const guessesLeft = MAX_GUESSES - numGuesses;
+        const guessesLeft = LENGTH_MODES[lengthMode].maxGuesses - numGuesses;
         messageEl.innerText = `Nice try! You have ${guessesLeft} ${guessesLeft === 1 ? 'guess' : 'guesses'} left...`;
     }
+}
+
+function renderSquare(row, col) {
+    const squareEl = document.createElement('div');
+    squareEl.id = `g${row}l${col}`;
+    squareEl.classList.add('square');
+    guessesEl.appendChild(squareEl);
+    return squareEl;
 }
 
 // Render the guesses with the appropriate background color based on the guess's state (exact match, partial match, no match, unknown - not tried)
 function renderGuesses() {
     // loop through the guesses array
     // get the element for that square and set the text and background color based on the object
-    for (let i = 0; i < MAX_GUESSES; i++) {
-        for (let j = 0; j < WORD_LENGTH; j++) {
-            const squareEl = document.getElementById(`g${i}l${j}`);
+    // console.log('renderGuesses : guessesEl.childNodes = \n', guessesEl.childNodes);
+    for (let i = 0; i < LENGTH_MODES[lengthMode].maxGuesses; i++) {
+        for (let j = 0; j < LENGTH_MODES[lengthMode].wordLength; j++) {
+            let squareEl = document.getElementById(`g${i}l${j}`);
+            // console.log('renderGuesses: squareEl after get = \n', squareEl);
+            if (!squareEl) squareEl = renderSquare(i, j);
+            // console.log('renderGuesses: squareEl after renderSquare = \n', squareEl);
             const square = guesses[i][j];
             // console.log('squareEl key: \n',`g${i}l${j}`);
             // console.log('squareEl: \n', squareEl);
@@ -363,7 +384,7 @@ function handleSelectedLetter(letter) {
     const isBackspace = letter.toLowerCase() === 'backspace';
     // console.log('handleSelectedLetter: isbackspace - \n', isBackspace);
 
-    while (letterIdx < WORD_LENGTH && guesses[numGuesses][letterIdx].letter) {
+    while (letterIdx < LENGTH_MODES[lengthMode].wordLength && guesses[numGuesses][letterIdx].letter) {
         // console.log('handleSelectedLetter - in while with letterIdx of: \n', letterIdx);
         letterIdx++;
     }
@@ -381,12 +402,12 @@ function handleSelectedLetter(letter) {
         }
         guessComplete = false;
     } else {
-        if (letterIdx < WORD_LENGTH) {
+        if (letterIdx < LENGTH_MODES[lengthMode].wordLength) {
             // Update current guess square state variable with letter clicked
             guesses[numGuesses][letterIdx].letter = letter;
             // console.log('handleSelectedLetter: guess complete?: \n', letterIdx === WORD_LENGTH - 1);
             // If no more empty squares on current guess, mark guess as complete to trigger highlight of "GUESS" button
-            guessComplete = (letterIdx === WORD_LENGTH - 1);
+            guessComplete = (letterIdx === LENGTH_MODES[lengthMode].wordLength - 1);
         }
         // console.log('handleSelectedLetter: guess square in if(letteridx<wordlength): \n', guesses[numGuesses]);
     }
@@ -565,7 +586,7 @@ function handleGuess() {
         guessComplete = false;
 
         // have they run out of guesses and lost
-        if (numGuesses === MAX_GUESSES) {
+        if (numGuesses === LENGTH_MODES[lengthMode].maxGuesses) {
             gameStatus = LOSS; 
             player.recordLoss();
         }
