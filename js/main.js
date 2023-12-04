@@ -120,6 +120,7 @@ let lettersUsed;  // an array of used letters where the key is the letter (from 
 
 let numGuesses;  // the number of guesses the player has made already
 
+let newGame;  // if we are starting a new game, we need to recreate the squares in case word length has changed
 let guessComplete;
 let gameStatus;   // W = win, L = loss (out of turns), otherwise keep playing
 
@@ -248,9 +249,21 @@ function isGameOver() {
     return gameStatus === WIN || gameStatus === LOSS;
 }
 
+// Remove square elements - we are starting a new game so we need to delete the existing square elements 
+// so they can be recreated using the new word length
+function removeSquareEls() {
+    let child = guessesEl.lastElementChild;
+    while (child) {
+        guessesEl.removeChild(child);
+        child = guessesEl.lastElementChild;
+    }
+}
+
+
 // Reset Guesses Array - Reinitialize guesses to be a two-dimensional array
 //  of objects - initially containing just a state of 0 (or unknown), with all letter k:v's deleted
 function resetGuesses() {
+    newGame = true;
     // console.log('resetGuesses - guesses before: \n', guesses);
     guesses = new Array(LENGTH_MODES[lengthMode].maxGuesses);
     for (let i = 0; i < LENGTH_MODES[lengthMode].maxGuesses; i++) {
@@ -266,6 +279,8 @@ function resetGuesses() {
             // console.log('AND guesses[i] AFTER STATE CHANGE = \n', guesses[i][j]);
         }
     }
+
+    removeSquareEls();
 }
 
 // Render the appropriate message (make a guess, you win, you lose)
@@ -309,7 +324,7 @@ function renderGuesses() {
         for (let j = 0; j < LENGTH_MODES[lengthMode].wordLength; j++) {
             let squareEl = document.getElementById(`g${i}l${j}`);
             // console.log('renderGuesses: squareEl after get = \n', squareEl);
-            if (!squareEl) squareEl = renderSquare(i, j);
+            if (newGame) squareEl = renderSquare(i, j);
             // console.log('renderGuesses: squareEl after renderSquare = \n', squareEl);
             const square = guesses[i][j];
             // console.log('squareEl key: \n',`g${i}l${j}`);
@@ -324,6 +339,7 @@ function renderGuesses() {
             squareEl.style.color = LETTER_STATE_LOOKUP[square.state].color;
         }
     }
+    newGame = false;
 }
 
 // Render the screen keyboard with the appropriate background color based on the letter's state (exact match, partial match, no match, unknown - not tried)
