@@ -71,7 +71,7 @@ class Player {
     }
     
     getWinPct() {
-        return this.getGamesPlayed() > 0 ? (this.winCount / this.getGamesPlayed()) * 100 : 0;
+        return this.getGamesPlayed() > 0 ? Math.round((this.winCount / this.getGamesPlayed()) * 100) : 0;
     }
     
     getWinStreak() {
