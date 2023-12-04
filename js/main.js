@@ -11,7 +11,7 @@
 //   - Maximum number of guesses
 // ===================================================== 
 const FILE_NAME = 'assets/words5.txt';
-const ALT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS', 'STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
+// const ALT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS', 'STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
 
 const EXACT_MATCH = 'e';
 const PARTIAL_MATCH = 'p';
@@ -146,8 +146,8 @@ function init() {
     numGuesses = 0;
     
     // pick secret word
-    secretWord = getSecretWord();
-    
+    getSecretWord();
+
     // reset guesses array
     // console.log('init: guesses before reset():\n', guesses);
     resetGuesses();
@@ -163,7 +163,7 @@ function init() {
 
 init();
 
-function loadFile(cb) {
+function loadFile() {
     const objXMLhttp = new XMLHttpRequest();
     objXMLhttp.open('GET', FILE_NAME, true);
     objXMLhttp.send();
@@ -173,19 +173,33 @@ function loadFile(cb) {
             SECRET_WORD_LIST = objXMLhttp.responseText.split('\n');
         }
         console.log('SECRET_WORD_LIST after = \n', SECRET_WORD_LIST);
-        // cb();
+
     };
 }
 
-function cleanSecretWordList() {
+function cleanSecretWordList(cb) {
     console.log('need o clean the word list - remove blanks, convert all to upper');
+    SECRET_WORD_LIST = SECRET_WORD_LIST.filter((word) => word.length > 0);
+    console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
+    SECRET_WORD_LIST = SECRET_WORD_LIST.map((word) => { return word.toUpperCase()});
+    console.log('SECRET_WORD_LIST in clean = \n', SECRET_WORD_LIST);
+
+    setTimeout(function() {
+        cb();
+    }, 1000);
 }
 
 // load secret word list if it hasn't already been done
-function loadSecretWordList(){
+function loadSecretWordList(cb){
     console.log('SECRET_WORD_LIST before = \n', SECRET_WORD_LIST);
-    if (SECRET_WORD_LIST) return;
-    loadFile(cleanSecretWordList);
+    if (!SECRET_WORD_LIST) {
+        loadFile();
+    } else {
+        console.log('do not load the second time');
+    }
+    setTimeout(function() {
+        cb();
+    }, 1000);
 }
 
 // is game over?
@@ -193,14 +207,25 @@ function isGameOver() {
     return gameStatus === WIN || gameStatus === LOSS;
 }
 
+function pickSecretWord() {
+    const wordIdx = Math.floor(Math.random() * SECRET_WORD_LIST.length);
+    console.log('\n getSecretWord() - secretWord: \n', SECRET_WORD_LIST[wordIdx]);
+    
+    secretWord = SECRET_WORD_LIST[wordIdx];
+
+}
+
+function onLoadSuccess() {
+    cleanSecretWordList(onCleanSuccess);
+}
+ function onCleanSuccess() {
+    return pickSecretWord();
+ }
+
 // Get Secret Word - Select a random word from the master array and return it
 function getSecretWord() {
     
-    loadSecretWordList();
-    const wordIdx = Math.floor(Math.random() * SECRET_WORD_LIST.length);
-    console.log('\n getSecretWord() - secretWord: \n', SECRET_WORD_LIST[wordIdx]);
-
-    return SECRET_WORD_LIST[wordIdx];
+    return loadSecretWordList(onLoadSuccess);
 }
 
 // Reset Guesses Array - Reinitialize guesses to be a two-dimensional array
