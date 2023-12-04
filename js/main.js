@@ -11,7 +11,7 @@
 //   - Maximum number of guesses
 // ===================================================== 
 const FILE_NAME = 'assets/words5.txt';
-// const ALT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'SUSIS', 'STARE', 'QUOTA', 'JUMPY', 'SKUNK'];
+const ALT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE'];
 
 const EXACT_MATCH = 'e';
 const PARTIAL_MATCH = 'p';
@@ -186,46 +186,42 @@ function cleanSecretWordList(cb) {
 
     setTimeout(function() {
         cb();
-    }, 1000);
+    }, 500);
 }
 
 // load secret word list if it hasn't already been done
 function loadSecretWordList(cb){
+    console.log('loadSecretWordList: should only happen for the first game!!!');
     console.log('SECRET_WORD_LIST before = \n', SECRET_WORD_LIST);
-    if (!SECRET_WORD_LIST) {
-        loadFile();
-    } else {
-        console.log('do not load the second time');
-    }
+    loadFile();
+
     setTimeout(function() {
         cb();
     }, 1000);
 }
 
-// is game over?
-function isGameOver() {
-    return gameStatus === WIN || gameStatus === LOSS;
-}
 
 function pickSecretWord() {
     const wordIdx = Math.floor(Math.random() * SECRET_WORD_LIST.length);
     console.log('\n getSecretWord() - secretWord: \n', SECRET_WORD_LIST[wordIdx]);
     
     secretWord = SECRET_WORD_LIST[wordIdx];
-
+    
 }
 
+// callback function to make sure clean and pick don't happen before load is complete
 function onLoadSuccess() {
-    cleanSecretWordList(onCleanSuccess);
+    cleanSecretWordList(pickSecretWord);
 }
- function onCleanSuccess() {
-    return pickSecretWord();
- }
 
 // Get Secret Word - Select a random word from the master array and return it
-function getSecretWord() {
-    
-    return loadSecretWordList(onLoadSuccess);
+function getSecretWord() {    
+    return (SECRET_WORD_LIST) ? pickSecretWord() : loadSecretWordList(onLoadSuccess);
+}
+
+// is game over?
+function isGameOver() {
+    return gameStatus === WIN || gameStatus === LOSS;
 }
 
 // Reset Guesses Array - Reinitialize guesses to be a two-dimensional array
