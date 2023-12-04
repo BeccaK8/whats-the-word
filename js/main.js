@@ -14,7 +14,15 @@
 // const DEFAULT_SECRET_WORD_LIST = ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE'];
 
 const LENGTH_MODES = {
-    5: {wordLength: 5, maxGuesses: 6, fileName: 'assets/words5.txt', defaultSecretWordList: ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE']}
+    4: {wordLength: 4, maxGuesses: 6, fileName: 'assets/words4.txt', defaultSecretWordList: ['BASS', 'EAST', 'TANK', 'SPOT', 'QUIT', 'JUMP', 'BEST', 'RANK', 'MILE', 'SEAT', 'ZERO']},
+    5: {wordLength: 5, maxGuesses: 6, fileName: 'assets/words5.txt', defaultSecretWordList: ['SKANT', 'SKUNK', 'STANK', 'STARE', 'QUOTA', 'JUMPY', 'BEAST', 'THANK', 'SMILE', 'RESET', 'QUEUE']},
+    6: {wordLength: 6, maxGuesses: 6, fileName: 'assets/words6.txt', defaultSecretWordList: ['CAUCUS', 'DURING', 'SKUNKY', 'PLAYER', 'RECENT', 'LENGTH', 'PROJECT', 'ONLINE', 'BRANCH', 'CREATE', 'CRATER', 'ASSUME']},
+    7: {wordLength: 7, maxGuesses: 6, fileName: 'assets/words7.txt', defaultSecretWordList: ['HISTORY', 'FEATURE', 'BRANCH', 'PLAYER', 'ZOOLOGY', 'WINDIER', 'WILLOWY', 'TOEHOLD', 'SUBJECT', 'SOPRANO', 'QUARTET']},
+    8: {wordLength: 8, maxGuesses: 6, fileName: 'assets/words8.txt', defaultSecretWordList: ['FABULOUS', 'GENEROUS', 'INFAMOUS', 'BROWBEAT', 'SICKNESS', 'SILENTLY', 'ZUCCHINI', 'AARDVARK', 'ABRASIVE', 'ABRUPTLY', 'FLATFOOT']},
+    9: {wordLength: 9, maxGuesses: 6, fileName: 'assets/words9.txt', defaultSecretWordList: ['WONDERFUL', 'THEATRICS', 'DIAGNOSIS', 'CATHARSIS', 'EMBARRASS', 'HOURGLASS', 'SNOWDRIFT', 'SECONDARY', 'WOLVERINE', 'ZOOLOGIST', 'DESIGNATE']},
+    10: {wordLength: 10, maxGuesses: 6, fileName: 'assets/words10.txt', defaultSecretWordList: ['ABBREVIATE', 'ACCOUNTING', 'BEDRAGGLED', 'COMPLETELY', 'ENTERPRISE', 'EVALUATION', 'MAGISTRATE', 'MANIPULATE', 'SILHOUETTE', 'SPEECHLESS', 'TENDERLOIN']},
+    11: {wordLength: 11, maxGuesses: 6, fileName: 'assets/words11.txt', defaultSecretWordList: ['ADVERTISING', 'ALTERNATIVE', 'DESTINATION', 'CELEBRATION', 'INTELLIGENT', 'JABBERWOCKY', 'HAPHAZARDLY', 'AGRICULTURE', 'PERSPECTIVE', 'MATHEMATICS', 'SPECULATION']},
+    12: {wordLength: 12, maxGuesses: 6, fileName: 'assets/words12.txt', defaultSecretWordList: ['TRANSMISSION', 'PRODUCTIVITY', 'INVESTIGATOR', 'ANTICIPATION', 'PHOTOGRAPHER', 'CONSERVATORY', 'INTELLIGENCE', 'ARCHITECTURE', 'CONTRIBUTION', 'ORGANIZATION', 'RELATIONSHIP']}
 };
 
 console.log('LENGTH_MODES: 5 = \n', LENGTH_MODES[5]);
@@ -30,9 +38,6 @@ const LETTER_STATE_LOOKUP = {
     [NO_MATCH]: {desc: 'No Match', bgColor: 'rgb(89 89 89)', color: 'white'},
     [UNKNOWN]: {desc: 'Unknown', bgColor: 'white', color: 'black'}
 };
-
-// const MAX_GUESSES = 6;
-// const WORD_LENGTH = 5;
 
 const WIN = 'W';
 const LOSS = 'L';
@@ -155,7 +160,8 @@ function init() {
     if (!player) player = new Player();
     console.log('\ninit: player \n', player);
     
-    lengthMode = 5;
+    lengthMode = Math.floor(Math.random() * 9) + 3;
+    console.log('init: lengthMode = \n', lengthMode);
     numGuesses = 0;
     
     // pick secret word
@@ -296,6 +302,9 @@ function renderGuesses() {
     // loop through the guesses array
     // get the element for that square and set the text and background color based on the object
     // console.log('renderGuesses : guessesEl.childNodes = \n', guessesEl.childNodes);
+    // set up guesses rows and columns
+    guessesEl.style.gridTemplateColumns = `repeat(${LENGTH_MODES[lengthMode].wordLength}, 5vmin)`;
+    guessesEl.style.gridTemplateRows = `repeat(${LENGTH_MODES[lengthMode].maxGuesses}, 5vmin)`;
     for (let i = 0; i < LENGTH_MODES[lengthMode].maxGuesses; i++) {
         for (let j = 0; j < LENGTH_MODES[lengthMode].wordLength; j++) {
             let squareEl = document.getElementById(`g${i}l${j}`);
