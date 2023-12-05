@@ -140,6 +140,10 @@ const buttonEl = document.getElementsByClassName('button')[0];
 // grab keyboard elements and save them to an array
 const keysEls = [...document.querySelectorAll(".row > div")];
 
+// get word length slider
+const wordLengthEl = document.getElementById('wordLength');
+console.log('wordLengthEl: \n', wordLengthEl);
+
 // help popup
 const helpPopupLinkEl = document.getElementById('popup-help-link');
 const helpPopupWindowEl = document.getElementById('popup-help-window');
@@ -161,7 +165,9 @@ function init() {
     if (!player) player = new Player();
     console.log('\ninit: player \n', player);
     
-    lengthMode = Math.floor(Math.random() * 9) + 3;
+    // if lengthMode hasn't been set, default it to 5
+    if (!lengthMode) lengthMode = 5;
+    //lengthMode = Math.floor(Math.random() * 9) + 3;
     console.log('init: lengthMode = \n', lengthMode);
     numGuesses = 0;
     
@@ -621,6 +627,13 @@ function handleGuess() {
     render();
 }
 
+// handle word length change
+function handleWordLength(evt) {
+    console.log('handleWordLength: evt.target.value = \n', evt.target.value);
+    if (isGameOver()) lengthMode = evt.target.value;
+    console.log('handleWordLength: lengthMode = \n', lengthMode);
+}
+
 // Handle Click of "PLAY AGAIN" button:
 function handlePlayAgain() {
     //   - Reinitialize game
@@ -703,6 +716,9 @@ document.getElementById('keyboard').addEventListener('click', handleScreenKeyCli
 buttonEl.addEventListener('click', handleButtonClick);
 
 document.addEventListener('keyup', handleKeyUp);
+
+wordLengthEl.addEventListener('input', handleWordLength);
+
 
 // help
 helpPopupLinkEl.addEventListener('click', (evt) => {
