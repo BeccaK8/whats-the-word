@@ -100,7 +100,6 @@ main {
     border: none;
 }
 
-
 datalist {
     display: flex;
     flex-direction: column;
@@ -166,28 +165,6 @@ datalist {
     cursor: default;
 }
 
-/* .button {
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 30px;
-
-    display: inline-block;
-    position: relative;
-    text-align: center;
-    color: rgb(89 89 89);
-    border: 1px solid rgb(89 89 89);
-    border-radius: 5px;
-
-    margin: 2vmin 0 2em;
-    line-height: 2em;
-    padding-left: 5em;
-    padding-right: 5em;
-
-    box-shadow: 0 0 0 0 transparent;
-
-    transition: all 0.2s ease-in;
-} */
 
 
 .button {
@@ -198,7 +175,7 @@ datalist {
     outline-color: rgba(0, 0, 0, .5);
     outline-offset: 0px;
     text-shadow: none;
-    transition: all 12500ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
 
     color: rgb(89 89 89);
     cursor: pointer;
@@ -270,7 +247,6 @@ datalist {
     position: relative;
     height: 200px;
     width: 300px;
-    /* border: 1px solid black; */
     vertical-align: bottom;
     font-size: 12px;
     margin-top: 20px;
@@ -303,3 +279,7 @@ datalist {
 .dist-title {
     font-size: 16px;
 } 
+
+.bar-value {
+    vertical-align: middle;
+}

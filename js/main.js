@@ -596,7 +596,7 @@ function buildBarChart(chartEl) {
         barEl.classList.add('bar');
         barEl.style.width = `${barWidth}%`;  // should be width for horizontal
         barEl.style.top = `${25 * idx}px`;  // should be top for horizontal
-        barEl.innerHTML = `<scan class='bar-value'>${guessDist[idx]}</span>`;
+        barEl.innerHTML = `<span class='bar-value'>${guessDist[idx]}</span>`;
         barContainer.append(barEl);
     
         const barDescEl = document.createElement('p');
@@ -615,6 +615,24 @@ function handleDistributionStats() {
     chartEl.appendChild(distTitleEl);
 
     buildBarChart(chartEl);
+}
+
+function handleOpenStats(evt) {
+    evt.preventDefault();
+
+    // is it already open?
+    if (statsPopupWindowEl.style.display === 'block') return;
+
+    // set the stats
+    document.getElementById('played').innerText = player.getGamesPlayed();
+    document.getElementById('win-pct').innerText = player.getWinPct();
+    document.getElementById('current-streak').innerText = player.getWinStreak();
+    document.getElementById('max-streak').innerText = player.getMaxStreak();
+
+    handleDistributionStats();
+
+    // show the window
+    statsPopupWindowEl.style.display = 'block';
 }
 
 function handleCloseStats() {
@@ -651,21 +669,5 @@ helpPopupLinkEl.addEventListener('click', (evt) => {
 helpCloseEl.addEventListener('click', () => helpPopupWindowEl.style.display = 'none');
 
 // stats
-statsPopupLinkEl.addEventListener('click', (evt) => {
-    evt.preventDefault();
-
-    // is it already open?
-    if (statsPopupWindowEl.style.display === 'block') return;
-
-    // set the stats
-    document.getElementById('played').innerText = player.getGamesPlayed();
-    document.getElementById('win-pct').innerText = player.getWinPct();
-    document.getElementById('current-streak').innerText = player.getWinStreak();
-    document.getElementById('max-streak').innerText = player.getMaxStreak();
-
-    handleDistributionStats();
-
-    // show the window
-    statsPopupWindowEl.style.display = 'block';
-});
+statsPopupLinkEl.addEventListener('click', handleOpenStats);
 statsCloseEl.addEventListener('click', handleCloseStats);
