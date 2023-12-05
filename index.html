@@ -11,58 +11,37 @@
     <header class="flex-ctr">
         <!-- help/stats nav -->
         <div id="nav">
-            <a href="#" id="popup-stats-link"><img src="imgs/stats.png" alt="Statistics" class="navIcon"></a>
-            <a href="#" id="popup-help-link"><img src="imgs/help.png" alt="Help" class="navIcon"></a>
+            <a href="#" id="popup-stats-link"><img src="imgs/stats.png" alt="Statistics" class="nav-icon"></a>
+            <a href="#" id="popup-help-link"><img src="imgs/help.png" alt="Help" class="nav-icon"></a>
         </div>
         <img src="imgs/gameLogo.png" alt="What's the Word?!">
+        <div id="length-selector">
+            <label for="word-length">Word Length:</label><br />
+            <input type="range" id="word-length" class="slider" name="wordLength" min="4" max="12" step="1" list="markers" value="5"/>
+
+            <datalist id="markers">
+                <option value="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6"></option>
+                <option value="7" label="7"></option>
+                <option value="8"></option>
+                <option value="9" label="9"></option>
+                <option value="10"></option>
+                <option value="11" label="11"></option>
+                <option value="12"></option>
+            </datalist>
+        </div>
     </header>
 
     <main class="flex-ctr">
         <h2 id="message"></h2>
         
         <!-- section for guess squares -->
-        <section id="guesses">
-            <!-- guess 0 -->
-            <div id="g0l0" class="square"></div>
-            <div id="g0l1" class="square"></div>
-            <div id="g0l2" class="square"></div>
-            <div id="g0l3" class="square"></div>
-            <div id="g0l4" class="square"></div>
-            <!-- guess 1 -->
-            <div id="g1l0" class="square"></div>
-            <div id="g1l1" class="square"></div>
-            <div id="g1l2" class="square"></div>
-            <div id="g1l3" class="square"></div>
-            <div id="g1l4" class="square"></div>
-            <!-- guess 2 -->
-            <div id="g2l0" class="square"></div>
-            <div id="g2l1" class="square"></div>
-            <div id="g2l2" class="square"></div>
-            <div id="g2l3" class="square"></div>
-            <div id="g2l4" class="square"></div>
-            <!-- guess 3 -->
-            <div id="g3l0" class="square"></div>
-            <div id="g3l1" class="square"></div>
-            <div id="g3l2" class="square"></div>
-            <div id="g3l3" class="square"></div>
-            <div id="g3l4" class="square"></div>
-            <!-- guess 4 -->
-            <div id="g4l0" class="square"></div>
-            <div id="g4l1" class="square"></div>
-            <div id="g4l2" class="square"></div>
-            <div id="g4l3" class="square"></div>
-            <div id="g4l4" class="square"></div>
-            <!-- guess 5 (really 6 since we started with 0) -->
-            <div id="g5l0" class="square"></div>
-            <div id="g5l1" class="square"></div>
-            <div id="g5l2" class="square"></div>
-            <div id="g5l3" class="square"></div>
-            <div id="g5l4" class="square"></div>
-        </section>
+        <section id="guesses"></section>
         
         <!-- section for keyboard -->
         <section id="keyboard">
-            <section id="row1" class="row flex-ctr">
+            <section id="row-1" class="row flex-ctr">
                 <div class="key" id="Q">Q</div>
                 <div class="key" id="W">W</div>
                 <div class="key" id="E">E</div>
@@ -74,7 +53,7 @@
                 <div class="key" id="O">O</div>
                 <div class="key" id="P">P</div>
             </section>
-            <section id="row2" class="row flex-ctr">
+            <section id="row-2" class="row flex-ctr">
                 <div class="key" id="A">A</div>
                 <div class="key" id="S">S</div>
                 <div class="key" id="D">D</div>
@@ -85,7 +64,7 @@
                 <div class="key" id="K">K</div>
                 <div class="key" id="L">L</div>
             </section>
-            <section id="row3" class="row flex-ctr">
+            <section id="row-3" class="row flex-ctr">
                 <div class="key" id="Z">Z</div>
                 <div class="key" id="X">X</div>
                 <div class="key" id="C">C</div>
@@ -110,13 +89,13 @@
             <li>Each guess must be a 5-letter word.</li>
             <li>The color of the square will change to show how close your guess was to the word.</li>
         </ul>
-        <div id="colorHelp">
-            <div class="colorImgTile"><img class="helpImg" src="imgs/help/exactMatch.png" alt="Exact Match"></div>
-            <div class="colorDesc">Green square indicates letter is in the word and in the correct spot</div>
-            <div class="colorImgTile"><img class="helpImg" src="imgs/help/partialMatch.png" alt="Exact Match"></div>
-            <div class="colorDesc">Yellow square indicates letter is in the word but in the wrong spot</div>
-            <div class="colorImgTile"><img class="helpImg" src="imgs/help/noMatch.png" alt="Exact Match"></div>
-            <div class="colorDesc">Grey square indicates letter is not in the word at all</div>
+        <div id="color-help">
+            <div class="color-img-tile"><img class="help-img" src="imgs/help/exactMatch.png" alt="Exact Match"></div>
+            <div class="color-desc">Green square indicates letter is in the word and in the correct spot</div>
+            <div class="color-img-tile"><img class="help-img" src="imgs/help/partialMatch.png" alt="Exact Match"></div>
+            <div class="color-desc">Yellow square indicates letter is in the word but in the wrong spot</div>
+            <div class="color-img-tile"><img class="help-img" src="imgs/help/noMatch.png" alt="Exact Match"></div>
+            <div class="color-desc">Grey square indicates letter is not in the word at all</div>
         </div>
     </div>
 
@@ -126,13 +105,13 @@
         
         <div id="stats">
             <div class="stat" id="played"></div>
-            <div class="stat" id="winPct"></div>
-            <div class="stat" id="currentStreak"></div>
-            <div class="stat" id="maxStreak"></div>
-            <div class="statTitle">Played</div>
-            <div class="statTitle">Win %</div>
-            <div class="statTitle">Current Streak</div>
-            <div class="statTitle">Max Streak</div>
+            <div class="stat" id="win-pct"></div>
+            <div class="stat" id="current-streak"></div>
+            <div class="stat" id="max-streak"></div>
+            <div class="stat-title">Played</div>
+            <div class="stat-title">Win %</div>
+            <div class="stat-title">Current Streak</div>
+            <div class="stat-title">Max Streak</div>
         </div>
 
         <div id="distribution"></div>

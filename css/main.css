@@ -35,7 +35,7 @@ header {
 header > #nav {
     align-self: flex-end;
 }
-.navIcon {
+.nav-icon {
     height: 1.75vmin;
     opacity: .5;
 }
@@ -45,7 +45,7 @@ header > #nav {
         height: 8vmin;
     }        
 
-    .navIcon {
+    .nav-icon {
         height: 2.5vmin;
         opacity: .5;
     }  
@@ -53,6 +53,61 @@ header > #nav {
 
 main {
     flex-direction: column;
+}
+
+#length-selector {
+    margin-top: 15px;
+}
+
+.slider {
+    /* remove default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* create a custom design */
+    width: 200px;
+    cursor: pointer;
+    outline: none;
+}
+
+.slider::-webkit-slider-runnable-track {
+    /* style the track */
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+}
+
+.slider::-moz-range-track {
+    /* style the track */
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background-color: rgb(10 123 55);
+    border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(10 123 55);
+    border-radius: 50%;
+    border: none;
+}
+
+
+datalist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    writing-mode: vertical-lr; 
+    width: 100%;
+    padding: 0 5px;
 }
 
 #guesses {
@@ -86,15 +141,15 @@ main {
     gap: 1vmin;
 }
 
-#row1 {
+#row-1 {
     grid-template-columns: repeat(10, 3vmin);
 }
 
-#row2 {
+#row-2 {
     grid-template-columns: repeat(9, 3vmin);
 }
 
-#row3 {
+#row-3 {
     grid-template-columns: repeat(8, 3vmin);
 }
 
@@ -165,7 +220,7 @@ main {
     text-align: right;
 }
 
-#colorHelp {
+#color-help {
     font-size: 14px;
     display: grid;
     grid-template-columns: 50px auto;
@@ -173,7 +228,7 @@ main {
     gap: 10px 3px;
 }
 
-.helpImg {
+.help-img {
     height: 25px;
 }
 
