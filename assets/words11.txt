@@ -4,7 +4,6 @@ abomination
 abridgement
 absenteeism
 abstraction
-academicals
 academician
 accelerator
 acclamation
@@ -13,7 +12,6 @@ accountancy
 accumulator
 achievement
 acquisition
-actinomycin
 acupuncture
 adjournment
 adjudicator
@@ -34,19 +32,15 @@ altercation
 alternation
 alternative
 ambivalence
-amenorrhoea
 amoxicillin
 amphetamine
 amyloidosis
 anachronism
 anaesthesia
 anaesthetic
-anastomosis
 angiography
 angioplasty
-angiotensin
 anniversary
-answerphone
 antechamber
 antiquarian
 aphrodisiac
@@ -81,14 +75,12 @@ bifurcation
 billionaire
 biofeedback
 birthweight
-bisexuality
 blanketweed
 blockbuster
 bloodstream
 bombardment
 bookbinding
 bookkeeping
-bourgeoisie
 breadwinner
 bricklaying
 brittleness
@@ -103,7 +95,6 @@ calligraphy
 callousness
 camaraderie
 candidature
-candidiasis
 candlelight
 candlestick
 cannibalism
@@ -116,10 +107,10 @@ cartography
 catastrophe
 catchphrase
 caterpillar
-catholicism
 cauliflower
 celebration
 cementation
+centerpiece
 centrepiece
 certificate
 chairperson
@@ -129,8 +120,6 @@ chancellery
 childminder
 chiropodist
 chlorophyll
-cholangitis
-cholestasis
 cholesterol
 cholesteryl
 circularity
@@ -172,8 +161,6 @@ concurrence
 conditional
 conditioner
 conductance
-confederacy
-confederate
 confinement
 conformance
 congressman
@@ -205,7 +192,6 @@ contravener
 contributor
 contrivance
 controversy
-conurbation
 convenience
 convergence
 convertible
@@ -235,8 +221,6 @@ culpability
 cultivation
 curtailment
 cybernetics
-cyclosporin
-daggerboard
 declaration
 decrepitude
 deformation
@@ -359,16 +343,12 @@ familiarity
 fascination
 favouritism
 feasibility
-fibronectin
-fieldworker
-fingerboard
 fingerprint
 firefighter
 fishkeeping
 flamboyance
 flexibility
 fluctuation
-fluticasone
 foolishness
 forbearance
 foreclosure
@@ -385,7 +365,6 @@ furtherance
 gastrectomy
 gastropathy
 gastroscopy
-gendarmerie
 gentlewoman
 genuineness
 germination
@@ -394,14 +373,12 @@ glutathione
 goalkeeping
 goalscoring
 grandfather
-grandmaster
 grandmother
 grandparent
 granulation
 grasshopper
 gravitation
 greasepaint
-greengrocer
 groundsheet
 groundswell
 groundwater
@@ -419,7 +396,6 @@ hammersmith
 handicapper
 handwriting
 harpsichord
-headteacher
 heavyweight
 helpfulness
 hepatectomy
@@ -454,7 +430,6 @@ illustrator
 imagination
 immigration
 immortality
-immunoassay
 impeachment
 imperialism
 impetuosity
@@ -478,7 +453,6 @@ indigestion
 indignation
 indirection
 inductivist
-infanticide
 infantryman
 infatuation
 inferiority
@@ -533,7 +507,6 @@ legislation
 legislature
 leisurewear
 letterpress
-leukotriene
 libertarian
 lightweight
 lipoprotein
@@ -572,7 +545,6 @@ merchandise
 meritocracy
 meteorology
 methodology
-methylation
 microkernel
 millionaire
 millisecond
@@ -589,7 +561,6 @@ mutagenesis
 naturalness
 naughtiness
 negotiation
-nephropathy
 nervousness
 neurologist
 nightingale
@@ -597,7 +568,6 @@ nonchalance
 normativism
 normativist
 nothingness
-noticeboard
 nourishment
 obfuscation
 objectivist
@@ -621,11 +591,9 @@ oscillation
 ostentation
 overgrazing
 overpayment
-paediatrics
 pamphleteer
 pandemonium
 paperweight
-paracetamol
 parachutist
 parallelism
 paratrooper
@@ -642,11 +610,9 @@ pathologist
 peculiarity
 penetration
 penicillium
-perestroika
 perforation
 performance
 periodicity
-peristalsis
 peritonitis
 permutation
 perpetrator
@@ -662,9 +628,7 @@ photography
 phraseology
 physicality
 physiognomy
-plagioclase
 planetarium
-plasminogen
 plasterwork
 playability
 playfulness
@@ -732,7 +696,6 @@ readmission
 realignment
 realisation
 realization
-realpolitik
 reappraisal
 reassertion
 reassurance
@@ -777,7 +740,6 @@ restitution
 restoration
 restriction
 retaliation
-retardation
 retinopathy
 retribution
 revaluation
@@ -854,7 +816,6 @@ subsistence
 subtraction
 sufficiency
 suffocation
-suffragette
 suitability
 summerhouse
 superiority
@@ -864,13 +825,11 @@ supervision
 supposition
 suppression
 switchboard
-synchrotron
 syndicalist
 syndication
 synthesiser
 synthesizer
 tachycardia
-tagliatelle
 teaspoonful
 technicolor
 teetotaller
@@ -882,7 +841,6 @@ temporality
 termination
 terminology
 testimonial
-thalidomide
 thermometer
 thromboxane
 thunderbird
@@ -902,7 +860,6 @@ transmittal
 transmitter
 transporter
 trepidation
-triumvirate
 troposphere
 trusteeship
 typesetting
