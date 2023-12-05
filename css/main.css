@@ -166,6 +166,30 @@ datalist {
     cursor: default;
 }
 
+/* .button {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 30px;
+
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    color: rgb(89 89 89);
+    border: 1px solid rgb(89 89 89);
+    border-radius: 5px;
+
+    margin: 2vmin 0 2em;
+    line-height: 2em;
+    padding-left: 5em;
+    padding-right: 5em;
+
+    box-shadow: 0 0 0 0 transparent;
+
+    transition: all 0.2s ease-in;
+} */
+
+
 .button {
     font-weight: 100;
     border: 0 solid;
@@ -174,7 +198,7 @@ datalist {
     outline-color: rgba(0, 0, 0, .5);
     outline-offset: 0px;
     text-shadow: none;
-    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 12500ms cubic-bezier(0.19, 1, 0.22, 1);
 
     color: rgb(89 89 89);
     cursor: pointer;
@@ -189,9 +213,11 @@ datalist {
     text-align: center;
 }
 
+
 .button:hover {
     border: 1px solid;
     box-shadow: inset 0 0 20px rgba(89, 89, 89, .5), 0 0 20px rgba(89, 89, 89, .2);
+    outline: 1px solid; 
     outline-color: rgba(89, 89, 89, 0);
     outline-offset: 15px;
     letter-spacing: 5px;
