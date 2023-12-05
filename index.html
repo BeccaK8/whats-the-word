@@ -15,6 +15,22 @@
             <a href="#" id="popup-help-link"><img src="imgs/help.png" alt="Help" class="navIcon"></a>
         </div>
         <img src="imgs/gameLogo.png" alt="What's the Word?!">
+        <div id="lengthSelector">
+            <label for="wordLength">Word Length:</label>
+            <input type="range" id="wordLength" name="wordLength" min="4" max="12" step="1" list="markers" />
+
+            <datalist id="markers">
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6"></option>
+                <option value="7"></option>
+                <option value="8"></option>
+                <option value="9"></option>
+                <option value="10"></option>
+                <option value="11"></option>
+                <option value="12"></option>
+            </datalist>
+        </div>
     </header>
 
     <main class="flex-ctr">

@@ -55,6 +55,24 @@ main {
     flex-direction: column;
 }
 
+
+/* datalist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    writing-mode: vertical-lr; 
+    width: 200px;
+}
+
+option {
+    padding: 0;
+}
+
+input[type="range"] {
+    width: 200px;
+    margin: 0;
+} */
+
 #guesses {
     display: grid;
     grid-template-columns: repeat(5, 5vmin);
