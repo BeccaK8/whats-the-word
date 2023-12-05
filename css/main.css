@@ -35,7 +35,7 @@ header {
 header > #nav {
     align-self: flex-end;
 }
-.navIcon {
+.nav-icon {
     height: 1.75vmin;
     opacity: .5;
 }
@@ -45,7 +45,7 @@ header > #nav {
         height: 8vmin;
     }        
 
-    .navIcon {
+    .nav-icon {
         height: 2.5vmin;
         opacity: .5;
     }  
@@ -55,7 +55,7 @@ main {
     flex-direction: column;
 }
 
-#lengthSelector {
+#length-selector {
     margin-top: 15px;
 }
 
@@ -110,10 +110,6 @@ datalist {
     padding: 0 5px;
 }
 
-/* option {
-    padding: 0;
-} */
-
 #guesses {
     display: grid;
     grid-template-columns: repeat(5, 5vmin);
@@ -145,15 +141,15 @@ datalist {
     gap: 1vmin;
 }
 
-#row1 {
+#row-1 {
     grid-template-columns: repeat(10, 3vmin);
 }
 
-#row2 {
+#row-2 {
     grid-template-columns: repeat(9, 3vmin);
 }
 
-#row3 {
+#row-3 {
     grid-template-columns: repeat(8, 3vmin);
 }
 
@@ -224,7 +220,7 @@ datalist {
     text-align: right;
 }
 
-#colorHelp {
+#color-help {
     font-size: 14px;
     display: grid;
     grid-template-columns: 50px auto;
@@ -232,7 +228,7 @@ datalist {
     gap: 10px 3px;
 }
 
-.helpImg {
+.help-img {
     height: 25px;
 }
 

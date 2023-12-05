@@ -126,7 +126,7 @@ let guessComplete;
 //   - Guess square divs
 // ===================================================== 
 const messageEl = document.querySelector('h2');
-const wordLengthEl = document.getElementById('wordLength');
+const wordLengthEl = document.getElementById('word-length');
 const guessesEl = document.getElementById('guesses');
 const buttonEl = document.getElementsByClassName('button')[0];
 
@@ -211,7 +211,7 @@ function loadSecretWordList(cb){
 
 function pickSecretWord() {
     const wordIdx = Math.floor(Math.random() * LENGTH_MODES[lengthMode].secretWordList.length);
-    console.log('\n getSecretWord() - secretWord: \n', LENGTH_MODES[lengthMode].secretWordList[wordIdx]);
+    console.log('getSecretWord() - secretWord: \n', LENGTH_MODES[lengthMode].secretWordList[wordIdx]);
     
     secretWord = LENGTH_MODES[lengthMode].secretWordList[wordIdx].toUpperCase();
 }
@@ -330,7 +330,7 @@ function renderButtons() {
     if (isGameOver()) {
         buttonEl.style.visibility = 'visible';
         buttonEl.innerText = 'Play Again';
-        buttonEl.id = 'playAgain';
+        buttonEl.id = 'play-again';
     } else if (guessComplete) {
         // if the guess is complete, set the id and text of the button to "Guess"
         buttonEl.style.visibility = 'visible';
@@ -338,9 +338,9 @@ function renderButtons() {
         buttonEl.id = 'guess';
         // if the guess is complete, add a class that changes the button colors to entice them to enter their guess
         if (guessComplete) {
-            buttonEl.classList.add('guessComplete');
+            buttonEl.classList.add('guess-complete');
         } else {
-            buttonEl.classList.remove('guessComplete');
+            buttonEl.classList.remove('guess-complete');
         }
     } else {
         // hide the button if there's no action to be performed
@@ -659,9 +659,9 @@ statsPopupLinkEl.addEventListener('click', (evt) => {
 
     // set the stats
     document.getElementById('played').innerText = player.getGamesPlayed();
-    document.getElementById('winPct').innerText = player.getWinPct();
-    document.getElementById('currentStreak').innerText = player.getWinStreak();
-    document.getElementById('maxStreak').innerText = player.getMaxStreak();
+    document.getElementById('win-pct').innerText = player.getWinPct();
+    document.getElementById('current-streak').innerText = player.getWinStreak();
+    document.getElementById('max-streak').innerText = player.getMaxStreak();
 
     handleDistributionStats();
 
