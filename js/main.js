@@ -236,7 +236,7 @@ function pickSecretWord() {
     const wordIdx = Math.floor(Math.random() * LENGTH_MODES[lengthMode].secretWordList.length);
     console.log('\n getSecretWord() - secretWord: \n', LENGTH_MODES[lengthMode].secretWordList[wordIdx]);
     
-    secretWord = LENGTH_MODES[lengthMode].secretWordList[wordIdx];
+    secretWord = LENGTH_MODES[lengthMode].secretWordList[wordIdx].toUpperCase();
     
 }
 
