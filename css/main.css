@@ -55,22 +55,63 @@ main {
     flex-direction: column;
 }
 
+#lengthSelector {
+    margin-top: 15px;
+}
 
-/* datalist {
+.slider {
+    /* remove default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* create a custom design */
+    width: 200px;
+    cursor: pointer;
+    outline: none;
+}
+
+.slider::-webkit-slider-runnable-track {
+    /* style the track */
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+}
+
+.slider::-moz-range-track {
+    /* style the track */
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background-color: rgb(10 123 55);
+    border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(10 123 55);
+    border-radius: 50%;
+    border: none;
+}
+
+
+datalist {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     writing-mode: vertical-lr; 
-    width: 200px;
+    width: 100%;
+    padding: 0 5px;
 }
 
-option {
+/* option {
     padding: 0;
-}
-
-input[type="range"] {
-    width: 200px;
-    margin: 0;
 } */
 
 #guesses {
