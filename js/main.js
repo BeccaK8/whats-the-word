@@ -164,7 +164,7 @@ function init() {
     console.log('\ninit: player \n', player);
     if (!player) player = new Player();
     console.log('\ninit: player \n', player);
-    
+
     // if lengthMode hasn't been set, default it to 5
     if (!lengthMode) lengthMode = 5;
     //lengthMode = Math.floor(Math.random() * 9) + 3;
@@ -630,7 +630,15 @@ function handleGuess() {
 // handle word length change
 function handleWordLength(evt) {
     console.log('handleWordLength: evt.target.value = \n', evt.target.value);
-    if (isGameOver()) lengthMode = evt.target.value;
+    if (numGuesses === 0 || isGameOver()) {
+        lengthMode = evt.target.value;
+        // only trigger the play again if its the first time starting the game; otherwise, wait for user to hit play again button
+        if (numGuesses === 0) handlePlayAgain();
+    } else {
+        // can't change mid-game
+        evt.target.value = lengthMode;
+    }
+    // if (isGameOver()) lengthMode = evt.target.value;
     console.log('handleWordLength: lengthMode = \n', lengthMode);
 }
 
