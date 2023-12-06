@@ -188,6 +188,7 @@ datalist {
     width: 100%;
     letter-spacing: 0;
     text-align: center;
+    visibility: hidden;
 }
 
 
