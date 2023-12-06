@@ -17,29 +17,34 @@ As a user, I want to...
   - track how many games I have won in a row (my current streak)
   - track the distribution of guesses it has taken me to win games
   - have the ability to play again
+  - play words of different lengths
 
 ## Wireframes
 
-Here is a wireframe of the game starting with an empty board, user entering the first word, and clicking "Guess"
+Here is a screenshot of the game starting with an empty board, user entering the first word, and clicking "Guess"
 
-![Game Start](wireframes/gameStart.png)
+![Game Start](wireframes/screenshots/gameStart.png)
+![User Guesses](wireframes/screenshots/userGuesses.png)
 
-This wireframe shows how the board will update as the user makes their first and second guesses
+This shot shows how the board will update as the user makes their first and second guesses
 
-![User Guesses](wireframes/userGuesses.png)
+![User Guesses](wireframes/screenshots/userEntersGuesses.png)
 
-Here is a wireframe of the user guessing the correct word and winning!
+Here is a screenshot of the user guessing the correct word and winning!
 
-![User Wins](wireframes/userWins.png)
+![User Wins](wireframes/screenshots/userWins.png)
 
 Unfortunately, they may not guess the word every time so here's what will happen if they lose...
 
-![User Loses](wireframes/userLoses.png)
+![User Loses](wireframes/screenshots/userLoses.png)
 
-Finally, this is a wireframe of the user's statistics for the current session.
+This is a view of the user's statistics for the current session.
 
-![User Statistics](wireframes/userStats.png)
+![User Statistics](wireframes/screenshots/userStats.png)
 
+If the user wants to challenge themselves, then can try different word lengths by using the slider
+
+![Word Length Slider](wireframes/screenshots/wordLengthSlider.png)
 
 ## Pseudocode
 
@@ -142,5 +147,12 @@ font-family: Arial, Helvetica, sans-serif;
 
 ## Next Steps
 As a user, I want to...
-  - play words of different lengths
   - play more than one word at a time on different boards using same guesses
+  - see statistics by word length
+  - see statistics by word length and number of boards
+  - enhance distribution bar chart in stats
+  - better enable game from mobile device
+  - allow unlimited guesses
+  - require guesses to be actual words
+  - make a hard version with more difficult secret words
+  
