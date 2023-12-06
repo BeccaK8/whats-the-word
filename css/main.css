@@ -257,47 +257,48 @@ ul {
 
 #stats {
     display: grid;
-    grid-template-columns: 70px 70px 70px 70px;
-    font-size: 13px;
+    grid-template-columns: 9vmin 9vmin 9vmin 9vmin; /* 70px 70px 70px 70px; */
+    font-size: 2vmin;  /* 13px */
     text-align: center;
-    gap: 10px;
+    gap: 1vmin; /* 10px */
 }
 
 #distribution {
     position: relative;
-    height: 200px;
-    width: 300px;
+    height: 18.5vmin;   /* 200px */
+    width: 27.8min;  /* 300px */
     vertical-align: bottom;
-    font-size: 12px;
-    margin-top: 20px;
+    font-size: 1.9vmin;  /* 12px */
+    margin-top: 1.85vmin;  /* 20px */
+    margin-right: 1.85vmin;
 }
 
 .bar {
     position: absolute;
     bottom: 0;
     display: inline-block;
-    height: 20px;
-    margin: 2px;
+    height: 1.85vmin;  /* 20px */
+    margin: 0.18vmin; /* 2px */
     background-color: rgb(89 89 89);
     color: white;
     font-weight: bold;
     text-align: center;
-    left: 15px;
+    left: 1.4vmin;  /* 15px */
 }
 
 .label {
     color: black;
     position: relative;
     width: 100%;
-    bottom: 23px;
-    left: -15px;
-    margin-left: 2px;
-    margin-right: 2px;
+    bottom: 2.1vmin;  /* 23px */
+    left: -1.8vmin;  /* -15px */
+    margin-left: 0.18vmin;  /* 2px */
+    margin-right: 0.18vmin;  /* 2px */
     text-align: justify;
 }
 
 .dist-title {
-    font-size: 16px;
+    font-size: 2vmin;  /* 16px */
 } 
 
 .bar-value {

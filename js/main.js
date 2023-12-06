@@ -595,7 +595,7 @@ function buildBarChart(chartEl) {
         const barEl = document.createElement('DIV');
         barEl.classList.add('bar');
         barEl.style.width = `${barWidth}%`;  // should be width for horizontal
-        barEl.style.top = `${25 * idx}px`;  // should be top for horizontal
+        barEl.style.top = `${2.31 * idx}vmin`;  // should be top for horizontal
         barEl.innerHTML = `<span class='bar-value'>${guessDist[idx]}</span>`;
         barContainer.append(barEl);
     
