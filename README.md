@@ -19,7 +19,7 @@ As a user, I want to...
   - have the ability to play again
   - play words of different lengths
 
-## Wireframes
+## Wireframes / Screenshots
 
 Here is a screenshot of the game starting with an empty board, user entering the first word, and clicking "Guess"
 
