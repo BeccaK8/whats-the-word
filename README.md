@@ -1,7 +1,7 @@
 # What's the Word?!
 
 ## Overview
-What's the Word?! is a version of Wordle that gives you six chances to guess a mystery 5-letter word.  After each guess, you'll find out how close you are - letters in the correct spot will be green, letters in the word but in the wrong spot will be yellow, and letters not in the word at all will be white.  The shown keyboard will help you see what letters you haven't yet tried.  Can you figure out...What's the Word?! in time?? Good luck!
+What's the Word?! is a version of Wordle that gives you six chances to guess a mystery word.  After each guess, you'll find out how close you are - letters in the correct spot will be green, letters in the word but in the wrong spot will be yellow, and letters not in the word at all will be white.  The shown keyboard will help you see what letters you haven't yet tried.  Can you figure out...What's the Word?! in time?? Good luck!
 
 ## User Stories
 As a user, I want to...
