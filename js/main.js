@@ -64,7 +64,7 @@ class Player {
         this.winStreak++;
         if (this.maxWinStreak < this.winStreak) this.maxWinStreak = this.winStreak;
         this.winGuessDistribution[guessNum]++;
-        console.log('player.recordwin - winGuessDistribution = \n', this.winGuessDistribution);
+        // console.log('player.recordwin - winGuessDistribution = \n', this.winGuessDistribution);
     }
     
     recordLoss() {
@@ -404,12 +404,8 @@ function handleScreenKeyClick(evt) {
     // Call Handle Selected Letter (below) with letter clicked
     handleSelectedLetter(letterClicked);
 }
-
-// ===================================================== 
+ 
 // Handle Press of Keyboard
-//   - Capture "letter" of key pressed
-//   - Call Handle Selected Letter (below) with letter pressed
-// ===================================================== 
 function handleKeyUp(evt) {
     // Check if key pressed is a letter, backspace or enter - if not, ignore press
     const evtKey = evt.key.toUpperCase();

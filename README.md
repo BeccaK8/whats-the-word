@@ -157,4 +157,4 @@ As a user, I want to...
   - make a hard version with more difficult secret words
   - play a daily "Word" against my friends
   - wager how many tries it will take me to guess secret word
-  
+  - not see repeated words frequently so the game should track when the words have been last used and pick the secret word accordingly
