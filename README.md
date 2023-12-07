@@ -155,4 +155,6 @@ As a user, I want to...
   - allow unlimited guesses
   - require guesses to be actual words
   - make a hard version with more difficult secret words
+  - play a daily "Word" against my friends
+  - wager how many tries it will take me to guess secret word
   
